@@ -10,7 +10,7 @@ Mealprep offers a toolkit, made with care, to help users save time in the data p
 
 Recognizing that the preparation step of a data science project often requires the most time and effort, `mealprep` aims to help data science chefs of all specialties master their recipes of analysis. This package tackles pesky tasks such as classifying columns as categorical or numeric ingredients, straining NA values and outliers, and automating a preprocessing recipe pipeline.
 
-### Functions
+## Functions
 Function 1)`peel_columns()`: determine numeric and categorical variable names from an input dataset
 ```
   This function will find the index of columns with all
@@ -33,7 +33,18 @@ Function 1)`peel_columns()`: determine numeric and categorical variable names fr
 
 Function 2)`strain_nas()`: identify columns with missing values, their frequency and proportion
 ```
-ENTER DOC STRING
+  For each column with missing values, this function will create a reference list of row indices, 
+  sum the number and calculate proportion of missing values 
+
+    Parameters:
+        -----------
+        df: pandas.core.frame.DataFrame
+            Data frame that need to be processed
+
+    Output:
+        -----------
+        df: pandas.core.frame.DataFrame
+            Data frame summarizing the indexes, count and proportion of missing values in each column
 ```
 
 Function 3)`strain_outliers()`: identify columns with outliers, their frequency and proportion
@@ -46,27 +57,21 @@ Function 4)`preprocess_recipe()`: quickly apply your favourite data preprocessin
 ENTER DOC STRING
 ```
 
-### Mealprep and Python's Ecosystem
+## Mealprep and Python's Ecosystem
 
 There are many great tools in the data science ecosystem for pre-processing data:
 
 - [scikit-learn preprocessing](https://scikit-learn.org/stable/modules/preprocessing.html) (python)
 
 
-### Python Dependencies
 
-- TODO
-
-
-### Installation:
+## Installation:
 
 ```
 pip install -i https://test.pypi.org/simple/ mealprep
 ```
 
-### Usage
 
-- TODO
 
 ### Documentation
 The official documentation is hosted on Read the Docs: <https://mealprep.readthedocs.io/en/latest/>
