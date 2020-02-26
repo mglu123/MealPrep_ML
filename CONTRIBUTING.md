@@ -1,123 +1,24 @@
+# Contributing to mealprep
 
-## Contributing
+This outlines how to propose a change to mealprep.
 
-Contributions are welcome, and they are greatly appreciated! Every little bit
-helps, and credit will always be given.
+### Fixing typos
 
-You can contribute in many ways:
+Small typos or grammatical errors in documentation may be edited directly using the GitHub web interface, so long as the changes are made in the _source_ file.
 
-## Types of Contributions
+### Prerequisites
 
+Before you make a substantial pull request, you should always file an issue and make sure someone from the team agrees that it's a problem. If you've found a bug, create an associated issue and illustrate the bug with a [minimal reproducible example](https://stackoverflow.com/help/minimal-reproducible-example).
 
-### Report Bugs
+### Pull request process
 
-Report bugs at https://github.com/mglu123/mealprep/issues.
+*  Please create a Git branch for each pull request (PR).   
+*  New code should follow the PEP-8 [style guide](https://www.python.org/dev/peps/pep-0008/).
 
-If you are reporting a bug, please include:
+### Code of Conduct
 
-* Your operating system name and version.
-* Any details about your local setup that might be helpful in troubleshooting.
-* Detailed steps to reproduce the bug.
+Please note that this project is released with a [Contributor Code of Conduct](CONDUCT.md). By participating in this project you agree to abide by its terms.
 
-### Fix Bugs
+## Attribution
 
-Look through the GitHub issues for bugs. Anything tagged with "bug" and "help
-wanted" is open to whoever wants to implement it.
-
-### Implement Features
-
-Look through the GitHub issues for features. Anything tagged with "enhancement"
-and "help wanted" is open to whoever wants to implement it.
-
-### Write Documentation
-
-mealprep could always use more documentation, whether as part of the
-official mealprep docs, in docstrings, or even on the web in blog posts,
-articles, and such.
-
-### Submit Feedback
-
-The best way to send feedback is to file an issue at https://github.com/mglu123/mealprep/issues.
-
-If you are proposing a feature:
-
-* Explain in detail how it would work.
-* Keep the scope as narrow as possible, to make it easier to implement.
-* Remember that this is a volunteer-driven project, and that contributions
-  are welcome :)
-
-## Get Started!
-
-Ready to contribute? Here's how to set up `mealprep` for local development.
-
-1. Fork the `mealprep` repo on GitHub.
-
-2. Clone your fork locally:
-
-	```
-	git clone git@github.com:your_name_here/mealprep.git
-	```
-
-3. Install your local copy with Poetry, this is how you set up your fork for local development:
-
-	```
-	cd mealprep/
-	poetry install
-	```
-
-4. Create a branch for local development:
-
-	```
-	git checkout -b name-of-your-bugfix-or-feature
-	```
-
-   	Now you can make your changes locally.
-
-5. When you're done making changes, check that your changes pass the tests by running pytest
-
-	```
-	poetry run pytest
-	```
-
-6. Commit your changes and push your branch to GitHub:
-
-	```
-	git add .
-	git commit -m "Your detailed description of your changes."
-	git push origin name-of-your-bugfix-or-feature
-	```
-
-7. Submit a pull request through the GitHub website.
-
-## Pull Request Guidelines
-
-Before you submit a pull request, check that it meets these guidelines:
-
-1. The pull request should include tests.
-2. If the pull request adds functionality, the docs should be updated. Put
-   your new functionality into a function with a docstring, and add the
-   feature to the list in README.md.
-3. The pull request should work for Python 3.7 & 3.8. Check https://github.com/mglu123/mealprep/pulls and make sure that the tests pass for all supported Python versions.
-
-## Tips
-
-To run a subset of tests:
-
-```
-py.test tests.test_mealprep
-```
-
-## Deploying
-
-A reminder for the maintainers on how to deploy:
-
-- Ensure the following secrets are recorded on GitHub:
-	- CODECOV_TOKEN	
-	- PYPI_USERNAME
- 	- PYPI_PASSWORD	
-
- GitHub Actions should build and deploy to testPyPI when a pull request is merged into master.
-
-## Code of Conduct
-
-Please note that the mealprep project is released with [this Contributor Code of Conduct](CONDUCT.md). By contributing to this project you agree to abide by its terms.
+The mealprep CONTRIBUTING file is based of the [dplyr CONTRIBUTING file](https://github.com/tidyverse/dplyr/blob/master/.github/CONTRIBUTING.md).
