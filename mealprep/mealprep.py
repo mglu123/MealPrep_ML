@@ -2,7 +2,7 @@
 import numpy as np
 import pandas as pd
 
-def find_num_categ(df, type_of_out = 'categ')
+def find_num_categ(df, type_of_out = 'categ'):
     '''
     This function will find the index of columns with all
     numeric value or categorical value based on the specification
@@ -30,9 +30,34 @@ def find_num_categ(df, type_of_out = 'categ')
 
 
 
-##Outlier checking 
-
-
+##Outlier checking (ANNY)
+def find_bad_apples(df):
+    '''
+    This function uses a univariate approach to outlier detection.
+    It returns the indices of rows within a dataframe that contain variable values
+    which are at least 3 standard deviations from the norm of the variable (outliers),
+    as well as how many outliers exist within those rows.
+    
+    Note: This function works best for small datasets with unimodal variable distributions.
+    
+    Parameters:
+    -----------
+    df : pandas.DataFrame
+        A dataframe containing numeric data
+    
+    Returns:
+    --------
+    bad_apples : list
+        A list of tuples (index, number of outliers)
+    
+    Example:
+    --------
+    d = {'col1': [1, 1, 1, 9000, 1, 1], 'col2': [1, 1, 1000, 1, 1, 1]}
+    df = pd.DataFrame(data=d)
+    find_bad_apples(df)
+    >>>> [(2, 1), (3, 1)]
+    '''
+    return bad_apples
 
 
 
