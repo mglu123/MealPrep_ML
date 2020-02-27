@@ -11,50 +11,55 @@ Mealprep offers a toolkit, made with care, to help users save time in the data p
 Recognizing that the preparation step of a data science project often requires the most time and effort, `mealprep` aims to help data science chefs of all specialties master their recipes of analysis. This package tackles pesky tasks such as classifying columns as categorical or numeric ingredients, straining NA values and outliers, and automating a preprocessing recipe pipeline.
 
 ## Functions
-Function 1)`peel_columns()`: determine numeric and categorical variable names from an input dataset
-```
-  This function will find the index of columns with all
-    numeric value or categorical value based on the specification
-
-    Parameters:
-        -----------
-        df: pandas.core.frame.DataFrame
-            Data frame that need to be proceed
-        type_of_out: string
-            Type of columns that we want to know index of
-        list_of_index: list
-            list of index value
-    Output:
-        -----------
-        list_of_index: list
-            list of index value
-
-```
-
-Function 2)`strain_nas()`: identify columns with missing values, their frequency and proportion
-```
-  For each column with missing values, this function will create a reference list of row indices, 
-  sum the number and calculate proportion of missing values 
-
-    Parameters:
-        -----------
-        df: pandas.core.frame.DataFrame
-            Data frame that need to be processed
-
-    Output:
-        -----------
-        df: pandas.core.frame.DataFrame
-            Data frame summarizing the indexes, count and proportion of missing values in each column
-```
-
-Function 3)`strain_outliers()`: identify columns with outliers, their frequency and proportion
+Function 1)`fruit_and_veg()`: determine numeric and categorical variable names from an input dataset
 ```
 ENTER DOC STRING
 ```
 
-Function 4)`preprocess_recipe()`: quickly apply your favourite data preprocessing recipes in one line of code.
+Function 2)`missing_ingredients()`: identify columns with missing values, their frequency and proportion
+```
+For each column with missing values, this function will create a reference list of row indices, 
+sum the number and calculate proportion of missing values 
+
+Parameters
+-----------
+data: pandas.core.frame.DataFrame
+    A dataframe that need to be processed
+
+Returns
+-----------
+pandas.core.frame.DataFrame
+    Data frame summarizing the indexes, count and proportion of missing values in each column
+
+    
+```
+
+Function 3)`bad_apples()`: identify columns with outliers, their frequency and proportion
 ```
 ENTER DOC STRING
+```
+
+Function 4)`make_recipe()`: quickly apply your favourite data preprocessing recipes in one line of code.
+```
+
+The `make_recipe()` function is used to quickly apply common data preprocessing techniques
+    
+    Parameters
+    ----------
+    data : pandas.DataFrame
+        A dataframe containing training data, validation data, X, and y
+    recipe : str
+        A string specifying which recipe to apply to the data
+    create_train_test : bool, optional
+        If True will partition data into train and test, by default False
+    create_train_valid_test : bool, optional
+        If TRUE will partition data into train, valid, and test, by default True
+    
+    Returns
+    -------
+    Tuple of pandas.DataFrame
+        A tuple of dataframes e.g. (train, valid, test)
+
 ```
 
 ## Mealprep and Python's Ecosystem
