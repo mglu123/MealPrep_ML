@@ -19,6 +19,11 @@ def find_num_categ(df, type_of_out = 'categ'):
         -----------
         list_of_index: list
             list of index value
+    Example
+    --------
+    >>>df = pd.DataFrame({'col1': [1, 2], 'col2': ['a', 'b']})
+    >>>find_num_categ(df, type_of_out = 'categ')
+    >>>[1]
 
     '''
     
