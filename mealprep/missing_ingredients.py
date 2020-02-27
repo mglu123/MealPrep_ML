@@ -1,4 +1,3 @@
-Learn more or give us feedback
 def missing_ingredients(data):
     """For each column with missing values, this function will create a reference list of row indices, 
     sum the number and calculate proportion of missing values 
