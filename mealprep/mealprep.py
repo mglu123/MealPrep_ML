@@ -2,7 +2,7 @@
 import numpy as np
 import pandas as pd
 
-def find_num_categ(df, type_of_out = 'categ')
+def fruits_and_veg(df, type_of_out = 'categ')
     '''
     This function will find the index of columns with all
     numeric value or categorical value based on the specification
