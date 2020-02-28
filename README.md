@@ -31,7 +31,7 @@ Output:
 Example
 --------
 >>>df = pd.DataFrame({'col1': [1, 2], 'col2': ['a', 'b']})
->>>find_num_categ(df, type_of_out = 'categ')
+>>>find_fruits_veg(df, type_of_out = 'categ')
 
 
 ```
@@ -44,7 +44,7 @@ sum the number and calculate proportion of missing values
 Parameters
 -----------
 data: pandas.core.frame.DataFrame
-    A dataframe that need to be processed
+    A data frame that need to be processed
 
 Returns
 -----------
@@ -57,7 +57,7 @@ pandas.core.frame.DataFrame
 Function 3)`find_bad_apples()`: identify columns with outliers, their frequency and proportion
 ```
 This function uses a univariate approach to outlier detection.
-    It returns the indices of rows within a dataframe that contain variable values
+    It returns the indices of rows within a data frame that contain variable values
     which are at least 3 standard deviations from the norm of the variable (outliers),
     as well as how many outliers exist within those rows.
     
@@ -66,7 +66,7 @@ This function uses a univariate approach to outlier detection.
     Parameters:
     -----------
     df : pandas.DataFrame
-        A dataframe containing numeric data
+        A data frame containing numeric data
     
     Returns:
     --------
@@ -107,9 +107,12 @@ Tuple of pandas.DataFrame
 
 ## Mealprep and Python's Ecosystem
 
-There are many great tools in the data science ecosystem for pre-processing data:
+**mealprep** complements many of the existing packages in the Python ecosystem around the theme of data preprocessing. When preparing a dataframe for a machine learning preprocessing pipeline, it is time consuming to manually note which columns are categorical and numerical, particularly for large datasets. The [pandas](https://pypi.org/project/pandas/) function `df.select_dtypes()` comes close by allowing users to select columns with data corresponding to specific data types however the output of this function is a pandas dataframe. `find_fruits_veg()` aims to fill this void by producing a list of columns corresponding to the categorical and numerical groups.  In terms of missing values, [pandas](https://pypi.org/project/pandas/) package’s `isna()` function converts all elements of a pandas.dataframe or pandas.series to boolean values representing if they are missing values. The package [autoimpute](https://autoimpute.readthedocs.io/en/latest/) provides a suite of tools to fill missing values in a dataset through multiple univariate, multivariate and time series methods. The gap between these packages is that neither provides you a summary of the missing values including the list of indices where they occur. `find_missing_ingredients()` augments these tools by providing a summary dataframe detailing which columns have missing values, as well as their count and proportion.
 
-- [scikit-learn preprocessing](https://scikit-learn.org/stable/modules/preprocessing.html) (python)
+The [pandas](https://pypi.org/project/pandas/) package’s `describe()` function is a staple in the data wrangling process because it returns several summary statistics for each numeric column in a dataframe, such as the mean, standard deviation, minimum, and maximum. Viewing these statistics together is helpful for detecting outliers. However, the output of this function does not tell you which rows of data these outliers are found in, or how many outliers are present in the dataframe. Packages like the [PyOD](https://pyod.readthedocs.io/en/latest/) toolkit and other functions that use clustering methods consider all variables at once to detect outliers for multivariate data. [PyOD](https://pyod.readthedocs.io/en/latest/) provides over 20 algorithms to select from in detecting these outliers, which is handy for large multivariate datasets where you know you want to consider all features in detecting outliers, but can be a bit extreme for initial data exploration. The **mealprep** `find_bad_apples()` function lives happily in the space between [pandas](https://pypi.org/project/pandas/) and [PyOD](https://pyod.readthedocs.io/en/latest/)-type solutions for outlier detection, where it provides more information than the [pandas](https://pypi.org/project/pandas/) `describe()` function to point out datapoints which need further investigation, but does not consider all variables at once like the [PyOD](https://pyod.readthedocs.io/en/latest/)-type functions do.
+
+Lastly, there are many great tools in the data science ecosystem for pre-processing data such as [scikit-learn preprocessing](https://scikit-learn.org/stable/modules/preprocessing.html) in Python. However, you may find yourself frequently writing the same lengthy code for common preprocessing tasks (e.g scale numeric features and one hot encode categorical features). `preprocess_recipe()` provides a _shortcut function_ to apply your favourite recipes quickly to preprocess data in one line of code.
+
 
 
 
