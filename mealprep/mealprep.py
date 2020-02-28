@@ -2,23 +2,25 @@
 import numpy as np
 import pandas as pd
 
-def find_num_categ(df, type_of_out = 'categ'):
+def find_fruits_veg(df, type_of_out = 'categ'):
     '''
     This function will find the index of columns with all
     numeric value or categorical value based on the specification
 
-    Parameters:
-        -----------
-        df: pandas.core.frame.DataFrame
-            Data frame that need to be proceed
-        type_of_out: string
-            Type of columns that we want to know index of
-        list_of_index: list
-            list of index value
-    Output:
-        -----------
-        list_of_index: list
-            list of index value
+    Parameters
+    -----------
+    df: pandas.core.frame.DataFrame
+        Data frame that need to be proceed
+    type_of_out: string
+        Type of columns that we want to know index of
+    list_of_index: list
+        list of index value
+   
+    Output
+    -----------
+    list_of_index: list
+        list of index value
+    
     Example
     --------
     >>>df = pd.DataFrame({'col1': [1, 2], 'col2': ['a', 'b']})
@@ -59,17 +61,17 @@ def find_bad_apples(df):
     
     Note: This function works best for small datasets with unimodal variable distributions.
     
-    Parameters:
+    Parameters
     -----------
     df : pandas.DataFrame
         A dataframe containing numeric data
     
-    Returns:
+    Returns
     --------
     bad_apples : list
         A list of tuples (index, number of outliers)
     
-    Example:
+    Example
     --------
     d = {'col1': [1, 1, 1, 9000, 1, 1], 'col2': [1, 1, 1000, 1, 1, 1]}
     df = pd.DataFrame(data=d)
