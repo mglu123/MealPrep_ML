@@ -39,10 +39,8 @@ def find_num_categ(df, type_of_out = 'categ'):
 def find_bad_apples(df):
     '''
     This function uses a univariate approach to outlier detection.
-    It returns the indices of rows within a dataframe that contain variable values
-    which are at least 3 standard deviations from the norm of the variable (outliers),
-    as well as how many outliers exist within those rows.
-    
+    For each column with outliers (values that are 3 or more standard deviations from the mean), this function will create a reference list of row indices with outliers, and the total number of outliers in that column.
+
     Note: This function works best for small datasets with unimodal variable distributions.
     
     Parameters:
@@ -52,15 +50,19 @@ def find_bad_apples(df):
     
     Returns:
     --------
-    bad_apples : list
-        A list of tuples (index, number of outliers)
+    bad_apples : pandas.DataFrame
+        A dataframe showing 3 columns:
+        Variable (column name),
+        Indices (list of row indices with outliers), and
+        Total Outliers (number of outliers in the column)
     
     Example:
     --------
-    d = {'col1': [1, 1, 1, 9000, 1, 1], 'col2': [1, 1, 1000, 1, 1, 1]}
-    df = pd.DataFrame(data=d)
-    find_bad_apples(df)
-    >>>> [(2, 1), (3, 1)]
+    >>> data = pd.DataFrame({'A' : [1, 1, 1, 1, 1], 'B' : [10000, 1, 1, 1, 1, 1]}
+    >>> df = pd.DataFrame(data)
+    >>> find_bad_apples(df)
+    Variable  Indices  Total Outliers
+       B        0            1
     '''
     return bad_apples
 
