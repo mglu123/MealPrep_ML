@@ -22,7 +22,7 @@ def find_fruits_veg(df, type_of_out = 'categ'):
     Example
     --------
     >>>df = pd.DataFrame({'col1': [1, 2], 'col2': ['a', 'b']})
-    >>>find_num_categ(df, type_of_out = 'categ')
+    >>>find_fruits_veg(df, type_of_out = 'categ')
     >>>[1]
 
     '''
