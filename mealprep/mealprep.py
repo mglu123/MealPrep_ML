@@ -30,9 +30,23 @@ def find_num_categ(df, type_of_out = 'categ'):
     return list_of_index
 
 
-##Identifying which columns have missing values and how many they have
+##Identifying which columns have missing values, how many they have, and the proportion (JAROME)
+def find_missing_ingredients(data):
+    """For each column with missing values, this function will create a reference list of row indices, 
+    sum the number and calculate proportion of missing values 
 
+    Parameters
+    -----------
+    data: pandas.core.frame.DataFrame
+        A dataframe that need to be processed
 
+    Returns
+    -----------
+    pandas.core.frame.DataFrame
+        Data frame summarizing the indexes, count and proportion of missing values in each column
+
+    """
+    return None    
 
 
 ##Outlier checking (ANNY)
@@ -65,7 +79,7 @@ def find_bad_apples(df):
     return bad_apples
 
 
-
+# Apply preprocessing (SAM)
 def make_recipe(data, recipe, create_train_test = False, create_train_valid_test = True):
     """The `make_recipe()` function is used to quickly apply common data preprocessing techniques
     
