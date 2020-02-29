@@ -105,7 +105,12 @@ Returns
 -------
 Tuple of pandas.DataFrame
     A tuple of dataframes e.g. (train, valid, test)
-
+    
+Example
+--------
+>>> from sklearn.datasets import load_iris
+>>> from mealprep.mealprep import make recipe
+>>> make_recipe(iris, "ohe_and_standard_scaler")     
 ```
 
 ## Mealprep and Python's Ecosystem
