@@ -16,8 +16,8 @@ def find_fruits_veg(df, type_of_out = 'categ'):
     list_of_index: list
         list of index value
    
-    Output
-    -----------
+    Returns
+    -------
     list_of_index: list
         list of index value
     
@@ -25,7 +25,7 @@ def find_fruits_veg(df, type_of_out = 'categ'):
     --------
     >>>df = pd.DataFrame({'col1': [1, 2], 'col2': ['a', 'b']})
     >>>find_fruits_veg(df, type_of_out = 'categ')
-    >>>[1]
+    [1]
 
     '''
     
@@ -43,7 +43,7 @@ def find_missing_ingredients(data):
         A dataframe that need to be processed
 
     Returns
-    -----------
+    -------
     pandas.core.frame.DataFrame
         Data frame summarizing the indexes, count and proportion of missing values in each column
 
@@ -65,7 +65,7 @@ def find_bad_apples(df):
         A dataframe containing numeric data
     
     Returns
-    --------
+    -------
     bad_apples : pandas.DataFrame
         A dataframe showing 3 columns:
         Variable (column name),
