@@ -2,6 +2,10 @@
 import numpy as np
 import pandas as pd
 
+from sklearn.model_selection import train_test_split
+from sklearn.compose import ColumnTransformer
+from sklearn.preprocessing import normalize, scale, Normalizer, StandardScaler, OneHotEncoder
+
 def find_fruits_veg(df, type_of_out = 'categ'):
     '''
     This function will find the index of columns with all
@@ -83,20 +87,19 @@ def find_bad_apples(df):
     return bad_apples
 
 
-# Apply preprocessing (SAM)
-def make_recipe(data, recipe, create_train_test = False, create_train_valid_test = True):
+def make_recipe(X, y, recipe, splits_to_return="train_test"):
     """The `make_recipe()` function is used to quickly apply common data preprocessing techniques
     
     Parameters
     ----------
-    data : pandas.DataFrame
-        A dataframe containing training data, validation data, X, and y
+    X : pandas.DataFrame
+        A dataframe containing training, validation, and testing features
+    y : pandas.DataFrame
+        A dataframe containing training, validation, and testing response
     recipe : str
         A string specifying which recipe to apply to the data
-    create_train_test : bool, optional
-        If True will partition data into train and test, by default False
-    create_train_valid_test : bool, optional
-        If TRUE will partition data into train, valid, and test, by default True
+    splits_to_return : str
+        "train_test" to return train and test splits, "train_test_valid" to return train, test, and validation data, "train" to return all data without splits
     
     Returns
     -------
@@ -109,4 +112,65 @@ def make_recipe(data, recipe, create_train_test = False, create_train_valid_test
     >>> from mealprep.mealprep import make recipe
     >>> make_recipe(iris, "ohe_and_standard_scaler")       
     """
-    return None
+
+    # validate inputs
+    assert X.shape[0] == y.shape[0], "X and y should have the same number of observations."
+    assert recipe in ["ohe_and_standard_scaler"], "Please select a valid string option for recipe."
+
+    # clean input data
+    y = y.to_numpy().ravel()
+    
+    # split data
+    if splits_to_return == "train_test":
+        X_train, X_test, y_train, y_test = train_test_split(
+            X, y, test_size=0.8)
+        X_valid = None
+        y_valid = None
+    elif splits_to_return == "train_test_valid":
+        X_train_valid, X_test, y_train_valid, y_test = train_test_split(
+            X, y, test_size=0.8)
+        X_train, X_valid, y_train, y_valid = train_test_split(
+            X_train_valid, y_train_valid, test_size=0.8)
+    else:
+        raise Exception("splits_to_return should be either 'train_test' or 'train_test_valid'.")        
+    
+    # determine column type
+    numerics = ['int16', 'int32', 'int64', 'float16', 'float32', 'float64']
+    categorics = ['object']
+    numeric_features = list(X_train.select_dtypes(include=numerics).columns)
+    categorical_features = list(X_train.select_dtypes(include=categorics).columns)
+
+    # preprocess data
+    if recipe == "ohe_and_standard_scaler":
+        numeric_transformer = StandardScaler()
+        categorical_transformer = OneHotEncoder()
+    else:
+        raise Exception("Please select a valid string option for recipe.")
+        
+    preprocessor = ColumnTransformer(
+            transformers=[
+                ("num", numeric_transformer, numeric_features),
+                ("cat", categorical_transformer, categorical_features)
+            ]
+        )
+    
+    X_train = preprocessor.fit_transform(X_train)
+    X_test = preprocessor.transform(X_test)
+    if splits_to_return == "train_test_valid":
+        X_valid = preprocessor.transform(X_valid)
+        
+    # get column names back and convert back to a DataFrame
+    categorical_features_transformed = preprocessor.transformers_[1][1].get_feature_names()
+    features_transformed = list(numeric_features) + list(categorical_features_transformed)
+    X_train = pd.DataFrame(data=X_train, columns=features_transformed)
+    X_test = pd.DataFrame(data=X_test, columns=features_transformed)
+    if splits_to_return == "train_test_valid":
+        X_valid = pd.DataFrame(data=X_valid, columns=features_transformed)
+    
+    return (X_train, X_valid, X_test, y_train, y_valid, y_test)
+
+# from vega_datasets import data
+# df = pd.read_json(data.cars.url).drop(columns=["Year"])
+# X = df.drop(columns=["Name"])
+# y = df[["Name"]]
+
