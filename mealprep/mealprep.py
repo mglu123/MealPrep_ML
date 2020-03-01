@@ -168,9 +168,3 @@ def make_recipe(X, y, recipe, splits_to_return="train_test"):
         X_valid = pd.DataFrame(data=X_valid, columns=features_transformed)
     
     return (X_train, X_valid, X_test, y_train, y_valid, y_test)
-
-# from vega_datasets import data
-# df = pd.read_json(data.cars.url).drop(columns=["Year"])
-# X = df.drop(columns=["Name"])
-# y = df[["Name"]]
-
