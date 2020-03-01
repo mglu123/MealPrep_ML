@@ -120,6 +120,8 @@ def make_recipe(X, y, recipe, splits_to_return="train_test"):
     # clean input data
     y = y.to_numpy().ravel()
     
+    # TODO: add parmeter for setting train, test, valid split size
+
     # split data
     if splits_to_return == "train_test":
         X_train, X_test, y_train, y_test = train_test_split(
