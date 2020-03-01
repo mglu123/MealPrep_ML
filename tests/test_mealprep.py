@@ -1,4 +1,5 @@
 from mealprep import mealprep
+import pandas as pd
 from vega_datasets import data
 
 def test_make_recipe():
