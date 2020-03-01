@@ -93,13 +93,13 @@ def make_recipe(X, y, recipe, splits_to_return="train_test"):
     Parameters
     ----------
     X : pandas.DataFrame
-        A dataframe containing training, validation, and testing features
+        A dataframe containing training, validation, and testing features.
     y : pandas.DataFrame
-        A dataframe containing training, validation, and testing response
+        A dataframe containing training, validation, and testing response.
     recipe : str
-        A string specifying which recipe to apply to the data
+        A string specifying which recipe to apply to the data. The only recipe currently available is "ohe_and_standard_scaler". More recipes are under development.
     splits_to_return : str
-        "train_test" to return train and test splits, "train_test_valid" to return train, test, and validation data, "train" to return all data without splits
+        "train_test" to return train and test splits, "train_test_valid" to return train, test, and validation data, "train" to return all data without splits.
     
     Returns
     -------
@@ -116,6 +116,7 @@ def make_recipe(X, y, recipe, splits_to_return="train_test"):
     # validate inputs
     assert X.shape[0] == y.shape[0], "X and y should have the same number of observations."
     assert recipe in ["ohe_and_standard_scaler"], "Please select a valid string option for recipe."
+    assert splits_to_return in ["train_test", "train_test_valid"], "Please enter a valid string for splits_to_return."
 
     # clean input data
     y = y.to_numpy().ravel()
