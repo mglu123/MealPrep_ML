@@ -14,5 +14,16 @@ def test_make_recipe():
 
     assert list(X_train.columns) == ['Miles_per_Gallon', 'Cylinders', 'Displacement', 'Horsepower', 'Weight_in_lbs', 'Acceleration', 'x0_Europe', 'x0_Japan', 'x0_USA']
     assert type(X_train) == pd.DataFrame
+    assert type(X_test) == pd.DataFrame
     assert X_valid == None
     assert y_valid == None
+
+    # Test on splits_to_return="train_test_valid"
+    X_train, X_valid, X_test, y_train, y_valid, y_test = mealprep.make_recipe(
+            X=X, y=y, recipe="ohe_and_standard_scaler", 
+            splits_to_return="train_test_valid")
+
+    assert list(X_train.columns) == ['Miles_per_Gallon', 'Cylinders', 'Displacement', 'Horsepower', 'Weight_in_lbs', 'Acceleration', 'x0_Europe', 'x0_Japan', 'x0_USA']
+    assert type(X_train) == pd.DataFrame
+    assert type(X_test) == pd.DataFrame
+    assert type(X_valid) == pd.DataFrame
