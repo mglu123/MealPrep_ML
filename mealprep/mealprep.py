@@ -18,8 +18,10 @@ def find_fruits_veg(df, type_of_out = 'categ'):
    
     Returns
     -------
-    list_of_index: list
-        list of index value
+    list_of_categ: list
+        list of index of categorical value
+    list_of_num: list
+        list of index of numerical value
     
     Example
     --------
