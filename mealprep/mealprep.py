@@ -112,9 +112,14 @@ def make_recipe(X, y, recipe, splits_to_return="train_test", random_seed=None, t
     
     Example
     --------
-    >>> from sklearn.datasets import load_iris
+    >>> from vega_datasets import data
     >>> from mealprep.mealprep import make recipe
-    >>> make_recipe(iris, "ohe_and_standard_scaler")       
+    >>> df = pd.read_json(data.cars.url).drop(columns=["Year"])
+    >>> X = df.drop(columns=["Name"])
+    >>> y = df[["Name"]] 
+    >>> X_train, X_valid, X_test, y_train, y_valid, y_test = mealprep.make_recipe(
+    ...        X=X, y=y, recipe="ohe_and_standard_scaler", 
+    ...        splits_to_return="train_test")    
     """
 
     # validate inputs

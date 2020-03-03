@@ -2,6 +2,7 @@ from mealprep import mealprep
 import pandas as pd
 import numpy as np
 from vega_datasets import data
+import pytest
 
 def cars_data():
     # create test data
@@ -81,6 +82,12 @@ def test_make_recipe_ohe():
        'Acceleration', 'x0_3', 'x0_4', 'x0_5', 'x0_6', 'x0_8', 'x1_Europe',
        'x1_Japan', 'x1_USA']
 
+    # check that error is thrown if bad recipe select
+    with pytest.raises(AssertionError) as e_info:
+        X_train, X_valid, X_test, y_train, y_valid, y_test = mealprep.make_recipe(
+                X=X, y=y, recipe="not_a_recipe", 
+                splits_to_return="train_test", random_seed=1993)
+
     return None
 
 
@@ -90,9 +97,8 @@ def test_make_recipe_split_prop():
     # check OHE behavior when one categorical column
     X_train, X_valid, X_test, y_train, y_valid, y_test = mealprep.make_recipe(
             X=X, y=y, recipe="ohe_and_standard_scaler", 
-            splits_to_return="train_test", train_valid_prop=1)
+            splits_to_return="train_test", train_valid_prop=0.5)
 
-    # assert X_train.select_dtypes(include=['float64', 'int64']).sum().sum() == 1348638.3
-    assert X_train.shape[0] == X.shape[0]
+    assert X_train.shape[0] == X_test.shape[0]
 
     return None
