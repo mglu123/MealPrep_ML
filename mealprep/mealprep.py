@@ -61,7 +61,7 @@ def find_bad_apples(df):
     
     Parameters
     -----------
-    df : pandas.DataFrame
+    df : pandas.core.frame.DataFrame
         A dataframe containing numeric data
     
     Returns

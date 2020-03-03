@@ -66,7 +66,7 @@ Note: This function works best for small datasets with unimodal variable distrib
 
 Parameters
 -----------
-df : pandas.DataFrame
+df : pandas.core.frame.DataFrame
     A dataframe containing numeric data
 
 Returns
@@ -92,7 +92,7 @@ The `make_recipe()` function is used to quickly apply common data preprocessing 
     
 Parameters
 ----------
-data : pandas.DataFrame
+data : pandas.core.frame.DataFrame
     A dataframe containing training data, validation data, X, and y
 recipe : str
     A string specifying which recipe to apply to the data
