@@ -137,7 +137,7 @@ def find_bad_apples(df):
             if ((mean - 2*sd) <= value <= (mean + 2*sd)) == True:
                 r += 1
             # If the value is not between 2 standard deviations of the column mean, add the value index to the indices list, and add 1 to the total
-            elif ((mean - 2*sd) < value < (mean + 2*sd)) == False:
+            elif ((mean - 2*sd) <= value <= (mean + 2*sd)) == False:
                 ind.append(r)
                 tot += 1
                 r += 1
