@@ -1,10 +1,11 @@
 ##Finding numeric and categorical variable names (HUAYUE LUKE)
 import numpy as np
 import pandas as pd
-
-from sklearn.model_selection import train_test_split
 from sklearn.compose import ColumnTransformer
-from sklearn.preprocessing import normalize, scale, Normalizer, StandardScaler, OneHotEncoder
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import (Normalizer, OneHotEncoder, StandardScaler,
+                                   normalize, scale)
+
 
 def find_fruits_veg(df, type_of_out = 'categ'):
     '''
@@ -87,7 +88,9 @@ def find_bad_apples(df):
     return bad_apples
 
 
-def make_recipe(X, y, recipe, splits_to_return="train_test", random_seed=None, train_valid_prop=0.8):
+def make_recipe(
+    X, y, recipe, splits_to_return="train_test", random_seed=None, train_valid_prop=0.8
+):
     """The `make_recipe()` function is used to quickly apply common data preprocessing techniques
     
     Parameters
@@ -123,33 +126,47 @@ def make_recipe(X, y, recipe, splits_to_return="train_test", random_seed=None, t
     """
 
     # validate inputs
-    assert X.shape[0] == y.shape[0], "X and y should have the same number of observations."
-    assert recipe in ["ohe_and_standard_scaler"], "Please select a valid string option for recipe."
-    assert splits_to_return in ["train_test", "train_test_valid"], "Please enter a valid string for splits_to_return."
+    assert (
+        X.shape[0] == y.shape[0]
+    ), "X and y should have the same number of observations."
+    assert recipe in [
+        "ohe_and_standard_scaler"
+    ], "Please select a valid string option for recipe."
+    assert splits_to_return in [
+        "train_test",
+        "train_test_valid",
+    ], "Please enter a valid string for splits_to_return."
 
     # clean input data
     y = y.to_numpy().ravel()
-    
+
     # TODO: add parmeter for setting train, test, valid split size
 
     # split data
     if splits_to_return == "train_test":
         X_train, X_test, y_train, y_test = train_test_split(
-            X, y, test_size=train_valid_prop, random_state=random_seed)
+            X, y, test_size=train_valid_prop, random_state=random_seed
+        )
         X_valid = None
         y_valid = None
     elif splits_to_return == "train_test_valid":
         X_train_valid, X_test, y_train_valid, y_test = train_test_split(
-            X, y, test_size=train_valid_prop, random_state=random_seed)
+            X, y, test_size=train_valid_prop, random_state=random_seed
+        )
         X_train, X_valid, y_train, y_valid = train_test_split(
-            X_train_valid, y_train_valid, test_size=train_valid_prop, 
-            random_state=random_seed)
+            X_train_valid,
+            y_train_valid,
+            test_size=train_valid_prop,
+            random_state=random_seed,
+        )
     else:
-        raise Exception("splits_to_return should be either 'train_test' or 'train_test_valid'.")        
-    
+        raise Exception(
+            "splits_to_return should be either 'train_test' or 'train_test_valid'."
+        )
+
     # determine column type
-    numerics = ['int16', 'int32', 'int64', 'float16', 'float32', 'float64']
-    categorics = ['object']
+    numerics = ["int16", "int32", "int64", "float16", "float32", "float64"]
+    categorics = ["object"]
     numeric_features = list(X_train.select_dtypes(include=numerics).columns)
     categorical_features = list(X_train.select_dtypes(include=categorics).columns)
 
@@ -159,26 +176,29 @@ def make_recipe(X, y, recipe, splits_to_return="train_test", random_seed=None, t
         categorical_transformer = OneHotEncoder(handle_unknown="ignore")
     else:
         raise Exception("Please select a valid string option for recipe.")
-        
+
     preprocessor = ColumnTransformer(
-            transformers=[
-                ("num", numeric_transformer, numeric_features),
-                ("cat", categorical_transformer, categorical_features)
-            ]
-        )
-    
+        transformers=[
+            ("num", numeric_transformer, numeric_features),
+            ("cat", categorical_transformer, categorical_features),
+        ]
+    )
+
     X_train = preprocessor.fit_transform(X_train)
     X_test = preprocessor.transform(X_test)
     if splits_to_return == "train_test_valid":
         X_valid = preprocessor.transform(X_valid)
-        
+
     # get column names back and convert back to a DataFrame
-    categorical_features_transformed = preprocessor.transformers_[1][1].get_feature_names()
-    features_transformed = list(numeric_features) + list(categorical_features_transformed)
+    categorical_features_transformed = preprocessor.transformers_[1][
+        1
+    ].get_feature_names()
+    features_transformed = list(numeric_features) + list(
+        categorical_features_transformed
+    )
     X_train = pd.DataFrame(data=X_train, columns=features_transformed)
     X_test = pd.DataFrame(data=X_test, columns=features_transformed)
     if splits_to_return == "train_test_valid":
         X_valid = pd.DataFrame(data=X_valid, columns=features_transformed)
-    
-    return (X_train, X_valid, X_test, y_train, y_valid, y_test)
 
+    return (X_train, X_valid, X_test, y_train, y_valid, y_test)
