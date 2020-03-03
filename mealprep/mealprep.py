@@ -99,7 +99,8 @@ def find_bad_apples(df):
     ...                           1.000001, 1.000001, 1.000001, 1.000001, 1.000001, 1.000001, 1.000001,
     ...                           1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]})
     >>> find_bad_apples(df))
-    'Congratulations! You have no bad apples.'
+    Variable                Indices     Total Outliers
+    No outliers detected        []              0
     '''
 
     # Checks that every column in the dataframe is numeric
@@ -149,7 +150,8 @@ def find_bad_apples(df):
             output = output.append({'Variable' : col, 'Indices' : ind, 'Total Outliers' : tot}, ignore_index = True)
 
     if len(output) == 0:
-        print('Congratulations! You have no bad apples.')
+        output = output.append({'Variable' : 'No outliers detected', 'Indices' : 'x', 'Total Outliers' : tot}, ignore_index = True)
+        return output
     else:
         return output
 

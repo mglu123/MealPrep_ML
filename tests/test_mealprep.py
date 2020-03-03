@@ -63,7 +63,8 @@ def test_find_bad_apples():
     assert_frame_equal(find_bad_apples(df_test3), df_answer3, check_dtype = False)
     
     # Checks Item 4
-    assert find_bad_apples(df_test4) == print('Congratulations! You have no bad apples.'), 'Test 4 for test_find_bad_apples() failed'
+    df_answer4 = pd.DataFrame({'Variable' : ['No outliers detected'], 'Indices' : 'x', 'Total Outliers' : 0})
+    assert_frame_equal(find_bad_apples(df_test4), df_answer4, check_dtype = False)
     
     # Checks Item 5
     df_answer5 = pd.DataFrame({'Variable' : ['A'], 'Indices' : [[2]], 'Total Outliers' : [1]})
