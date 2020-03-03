@@ -87,7 +87,7 @@ def find_bad_apples(df):
     return bad_apples
 
 
-def make_recipe(X, y, recipe, splits_to_return="train_test"):
+def make_recipe(X, y, recipe, splits_to_return="train_test", random_seed=None, train_valid_prop=0.8):
     """The `make_recipe()` function is used to quickly apply common data preprocessing techniques
     
     Parameters
@@ -98,8 +98,12 @@ def make_recipe(X, y, recipe, splits_to_return="train_test"):
         A dataframe containing training, validation, and testing response.
     recipe : str
         A string specifying which recipe to apply to the data. The only recipe currently available is "ohe_and_standard_scaler". More recipes are under development.
-    splits_to_return : str
-        "train_test" to return train and test splits, "train_test_valid" to return train, test, and validation data, "train" to return all data without splits.
+    splits_to_return : str, optional
+        "train_test" to return train and test splits, "train_test_valid" to return train, test, and validation data, "train" to return all data without splits. By default "train_test".
+    random_seed : int, optional
+        The random seed to set for splitting data to create reproducible results. By default None.
+    train_valid_prop : float, optional
+        The proportion to split the data by. Should range between 0 to 1. By default = 0.8
     
     Returns
     -------
@@ -126,14 +130,15 @@ def make_recipe(X, y, recipe, splits_to_return="train_test"):
     # split data
     if splits_to_return == "train_test":
         X_train, X_test, y_train, y_test = train_test_split(
-            X, y, test_size=0.8)
+            X, y, test_size=train_valid_prop, random_state=random_seed)
         X_valid = None
         y_valid = None
     elif splits_to_return == "train_test_valid":
         X_train_valid, X_test, y_train_valid, y_test = train_test_split(
-            X, y, test_size=0.8)
+            X, y, test_size=train_valid_prop, random_state=random_seed)
         X_train, X_valid, y_train, y_valid = train_test_split(
-            X_train_valid, y_train_valid, test_size=0.8)
+            X_train_valid, y_train_valid, test_size=train_valid_prop, 
+            random_state=random_seed)
     else:
         raise Exception("splits_to_return should be either 'train_test' or 'train_test_valid'.")        
     
@@ -146,7 +151,7 @@ def make_recipe(X, y, recipe, splits_to_return="train_test"):
     # preprocess data
     if recipe == "ohe_and_standard_scaler":
         numeric_transformer = StandardScaler()
-        categorical_transformer = OneHotEncoder()
+        categorical_transformer = OneHotEncoder(handle_unknown="ignore")
     else:
         raise Exception("Please select a valid string option for recipe.")
         
@@ -171,3 +176,4 @@ def make_recipe(X, y, recipe, splits_to_return="train_test"):
         X_valid = pd.DataFrame(data=X_valid, columns=features_transformed)
     
     return (X_train, X_valid, X_test, y_train, y_valid, y_test)
+
