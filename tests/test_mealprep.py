@@ -7,7 +7,7 @@ def test_find_fruits_veg():
     1. If the find_fruits_veg find numerical column correctly
     2. If the find_fruits_veg find categorical column correctly
     3. If the find_fruits_veg can handle a data frame with NAs.
-    4. If the find_fruits_veg can handle empty dataframe.
+    4. If the find_fruits_veg can handle an empty data frame.
     
     Parameters
     -----------
