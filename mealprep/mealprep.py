@@ -51,7 +51,7 @@ def find_missing_ingredients(data):
     assert data.shape[0] >= 1, "The input data frame has no rows"
     
     if np.sum(np.sum(data.isna(), axis=0)) == 0:
-        print("There are no missing values")
+        return "There are no missing values"
         
     
     else:
