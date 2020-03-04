@@ -9,15 +9,6 @@ def test_find_fruits_veg():
     3. If the find_fruits_veg can handle a data frame with NAs.
     4. If the find_fruits_veg can handle an empty data frame.
     
-    Parameters
-    -----------
-    iris: pandas.core.frame.DataFrame
-        Iris data frame used to test function behaviour #1 and #2
-    df_few_nas: pandas.core.frame.DataFrame
-        Data frame with a few NAs used to test function behaviour #3
-    df_lot_nas: pandas.core.frame.DataFrame
-        Data frame with a lot of NAs and will be empty after drop 
-        NAs used to test function behaviour #3
    
     Example
     --------
