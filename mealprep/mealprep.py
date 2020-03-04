@@ -46,7 +46,27 @@ def find_missing_ingredients(data):
         Data frame summarizing the indexes, count and proportion of missing values in each column
 
     """
-    return None    
+    assert type(data) == pd.core.frame.DataFrame, "Input path should be a pandas data frame"
+
+    assert data.shape[0] >= 1, "The input data frame has no rows"
+    
+    if np.sum(np.sum(data.isna(), axis=0)) == 0:
+        print("There are no missing values")
+        
+    
+    else:
+        report = pd.DataFrame({'NaN count': np.sum(data.isna(),axis=0), 
+                               'NaN proportion': np.sum(data.isna(),axis=0)/data.shape[0]}).reset_index()
+
+        report['NaN proportion'] = pd.Series(["{0:.1f}%".format(val*100) for val in report['NaN proportion']])
+        report = report.rename(columns={"index": 'Column name'})
+
+        return report    
+
+    
+
+
+    
 
 
 ##Outlier checking (ANNY)
