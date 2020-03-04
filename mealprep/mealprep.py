@@ -184,7 +184,7 @@ def make_recipe(
     Returns
     -------
     Tuple of pandas.DataFrame
-        A tuple of dataframes e.g. (train, valid, test)
+        A tuple of dataframes: (X_train, X_valid, X_test, y_train, y_valid, y_test)
     
     Example
     --------
