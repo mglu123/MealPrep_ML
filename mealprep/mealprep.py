@@ -4,9 +4,9 @@ import pandas as pd
 
 def find_fruits_veg(df, type_of_out = 'categ'):
     '''
-    This function will find the index of columns with all
-    numeric value or categorical value based on the specification
-
+    This function will drop row with NAs and find the index of columns with all
+    numeric value or categorical value based on the specification.
+    
     Parameters
     -----------
     df: pandas.core.frame.DataFrame
@@ -18,19 +18,32 @@ def find_fruits_veg(df, type_of_out = 'categ'):
    
     Returns
     -------
-    list_of_index: list
-        list of index value
+    list_of_categ: list
+        list of index of categorical value
+    list_of_num: list
+        list of index of numerical value
     
     Example
     --------
-    >>>df = pd.DataFrame({'col1': [1, 2], 'col2': ['a', 'b']})
-    >>>find_fruits_veg(df, type_of_out = 'categ')
+    >>> df = pd.DataFrame({'col1': [1, 2], 'col2': ['a', 'b']})
+    >>> find_fruits_veg(df, type_of_out = 'categ')
     [1]
-
     '''
+    list_of_categ = []
+    list_of_num = []
+    df_clean = df.dropna()
+    if df_clean.shape[0] == 0:
+        return "It is a empty data frame or too many missing data"
+    for i in np.arange(df_clean.shape[1]):
+        if type(df_clean.iloc[0,i]) == str:
+            list_of_categ += [i]
+        elif type(df_clean.iloc[0,i]) != str:
+            list_of_num += [i]
+    if type_of_out== 'categ':
+        return list_of_categ
+    elif type_of_out== 'num':
+        return list_of_num
     
-    return list_of_index
-
 
 ##Identifying which columns have missing values, how many they have, and the proportion (JAROME)
 def find_missing_ingredients(data):
