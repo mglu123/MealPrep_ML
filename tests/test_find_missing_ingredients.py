@@ -8,8 +8,8 @@ def test_find_missing_ingredients():
     This is a test function for find_missing_ingredients, which checks the following behaviour:
     1. If the function counts the number of missing values correctly
     2. If the function returns the desired string if there are no missing values
-    3. If the find_fruits_veg can handle dataframe with NAs.
-    4. If the find_fruits_veg can handle empty dataframe.
+    3. If the find_missing_ingredients can handle dataframe with NAs.
+    4. If the find_missing_ingredients can handle empty dataframe.
     
    
     Example
