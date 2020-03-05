@@ -1,9 +1,7 @@
 from mealprep.mealprep import find_fruits_veg
 import numpy as np
 import pandas as pd
-#import pytest
-#from pand
-#as._testing import assert_frame_equal
+
 def test_find_fruits_veg():
     '''
     This is a test function for find_fruits_veg, and it checks the following behaviour:
