@@ -1,4 +1,4 @@
-from mealprep import find_fruits_veg
+from mealprep.mealprep import find_fruits_veg
 import numpy as np
 import pandas as pd
 #import pytest
