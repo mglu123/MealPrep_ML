@@ -1,0 +1,9 @@
+README.md
+setup.py
+mealprep/__init__.py
+mealprep/mealprep.py
+mealprep.egg-info/PKG-INFO
+mealprep.egg-info/SOURCES.txt
+mealprep.egg-info/dependency_links.txt
+mealprep.egg-info/requires.txt
+mealprep.egg-info/top_level.txt

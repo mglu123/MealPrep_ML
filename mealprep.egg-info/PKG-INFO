@@ -1,0 +1,11 @@
+Metadata-Version: 1.2
+Name: mealprep
+Version: 0.1.0
+Summary: Python package that ease the pain in fpre-processing like outlier finding, numerical/categorical data and etc.
+Home-page: UNKNOWN
+Author: luhuayue
+Author-email: luhuayueapp@163.com
+License: UNKNOWN
+Description: UNKNOWN
+Platform: UNKNOWN
+Requires-Python: >=3.7,<4.0

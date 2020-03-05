@@ -57,12 +57,17 @@ pandas.core.frame.DataFrame
     
 ```
 
-Function 3)`find_bad_apples()`: identify columns with outliers, their frequency of outliers
+Function 3)`find_bad_apples()`: identify columns with outliers, the indices of rows with outliers in these columns, and the frequency of outliers in these columns
 ```
+def find_bad_apples(df):
+'''
 This function uses a univariate approach to outlier detection.
-For each column with outliers (values that are 3 or more standard deviations from the mean), this function will create a reference list of row indices with outliers, and the total number of outliers in that column.
+For each column with outliers (values that are 2 or more standard deviations from the mean),
+this function will create a reference list of row indices with outliers, and
+the total number of outliers in that column.
 
 Note: This function works best for small datasets with unimodal variable distributions.
+Note: If your dataframe has duplicate column names, only the last of the duplicated columns will be checked.
 
 Parameters
 -----------
@@ -77,13 +82,31 @@ bad_apples : pandas.DataFrame
     Indices (list of row indices with outliers), and
     Total Outliers (number of outliers in the column)
 
-Example
+Examples
 --------
->>> data = pd.DataFrame({'A' : [1, 1, 1, 1, 1], 'B' : [10000, 1, 1, 1, 1, 1]}
->>> df = pd.DataFrame(data)
+>>> df = pd.DataFrame({'A' : ['test', 1, 1, 1, 1])
 >>> find_bad_apples(df)
-Variable  Indices  Total Outliers
-   B        0            1
+AssertionError: Every column in your dataframe must be numeric.
+
+>>> df = pd.DataFrame({'A' : [1, 1, 1, 1, 1],
+...                    'B' : [10000, 1, 1, 1, 1]})
+>>> find_bad_apples(df)
+AssertionError: Sorry, you don't have enough data. The dataframe needs to have at least 30 rows.
+
+>>> df = pd.DataFrame({'A' : [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+...                    'B' : [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,-100,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,100],
+...                    'C' : [1,1,1,1,1,19,1,1,1,1,1,1,1,1,19,1,1,1,1,1,1,1,1,1,1,1,19,1,1,1,1,1,1,1,1]})
+>>> find_bad_apples(df)
+Variable      Indices     Total Outliers
+    B         [17, 34]          2
+    C      [5, 14, 26]          3
+    
+>>> df = pd.DataFrame({'A' : [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+...                    'B' : [1.000001, 1.000001, 1.000001, 1.000001, 1.000001, 1.000001, 1.000001, 1.000001,
+...                           1.000001, 1.000001, 1.000001, 1.000001, 1.000001, 1.000001, 1.000001,
+...                           1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]})
+>>> find_bad_apples(df))
+'Congratulations! You have no bad apples.'
 ```
 
 Function 4)`make_recipe()`: quickly apply your favourite data preprocessing recipes in one line of code.
