@@ -65,6 +65,12 @@ def find_missing_ingredients(data):
     pandas.core.frame.DataFrame
         Data frame summarizing the indexes, count and proportion of missing values in each column
 
+    Example
+    --------
+    >>> df = data.frame("letters" = c("a","b","c"),"numbers" = c(1,2,3))
+    >>> find_missing_ingredients(df)
+    'There are no missing values'
+
     """
     assert type(data) == pd.core.frame.DataFrame, "Input path should be a pandas data frame"
 
