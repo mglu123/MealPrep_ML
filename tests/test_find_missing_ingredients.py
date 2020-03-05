@@ -26,4 +26,4 @@ def test_find_missing_ingredients():
 
     test2 = {'column1': [1,2,3], 'column2': [4,5,6]}
     df2 = pd.DataFrame(test2)
-    assert(find_missing_ingredients(df4) == "There are no missing values")
+    assert(find_missing_ingredients(df2) == "There are no missing values")
