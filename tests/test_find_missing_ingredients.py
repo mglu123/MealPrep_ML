@@ -1,4 +1,4 @@
-from mealprep import mealprep
+from mealprep.mealprep import  find_missing_ingredients
 import pandas as pd
 import numpy as np
 
