@@ -79,10 +79,17 @@ def find_missing_ingredients(data):
     if np.sum(np.sum(data.isna(), axis=0)) == 0:
         return "There are no missing values"
         
+    counts = np.sum(data.isna(),axis=0)
+    indices = []
+    
+    for column in counts.index:
+        indices.append(data[column][data[column].isna()].index.values)
+    
     
     else:
-        report = pd.DataFrame({'NaN count': np.sum(data.isna(),axis=0), 
-                               'NaN proportion': np.sum(data.isna(),axis=0)/data.shape[0]}).reset_index()
+        report = pd.DataFrame({'NaN count': counts, 
+                               'NaN proportion': counts/data.shape[0],
+                               'NaN indices': indices}).reset_index()
 
         report['NaN proportion'] = pd.Series(["{0:.1f}%".format(val*100) for val in report['NaN proportion']])
         report = report.rename(columns={"index": 'Column name'})
@@ -271,10 +278,11 @@ def make_recipe(
             test_size=train_valid_prop,
             random_state=random_seed,
         )
-    else:
-        raise Exception(
-            "splits_to_return should be either 'train_test' or 'train_test_valid'."
-        )
+        
+    # else:
+    #     raise Exception(
+    #         "splits_to_return should be either 'train_test' or 'train_test_valid'."
+    #     )
 
     # determine column type
     numerics = ["int16", "int32", "int64", "float16", "float32", "float64"]
@@ -286,8 +294,8 @@ def make_recipe(
     if recipe == "ohe_and_standard_scaler":
         numeric_transformer = StandardScaler()
         categorical_transformer = OneHotEncoder(handle_unknown="ignore")
-    else:
-        raise Exception("Please select a valid string option for recipe.")
+    # else:
+    #     raise Exception("Please select a valid string option for recipe.")
 
     preprocessor = ColumnTransformer(
         transformers=[

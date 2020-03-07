@@ -102,6 +102,18 @@ preprocess data in one line of code.
 
     pip install -i https://test.pypi.org/simple/ mealprep
 
+### Branch Coverage 
+
+To get the branch coverage, run the following command line code:
+
+```
+poetry run pytest --cov-branch --cov=mealprep
+```
+
+The coverage result is shown below:
+
+<img src='img/branch_coverage.png' width = 600  />
+
 ### Documentation
 
 The official documentation is hosted on Read the Docs:
