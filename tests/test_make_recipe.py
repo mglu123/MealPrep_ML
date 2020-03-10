@@ -102,3 +102,18 @@ def test_make_recipe_split_prop():
     assert X_train.shape[0] == X_test.shape[0]
 
     return None
+
+
+def test_make_recipe_defence():
+        X, y = cars_data()
+        # with pytest.raises(AssertionError):
+        #         X_train, X_valid, X_test, y_train, y_valid, y_test = mealprep.make_recipe(
+        #         X=X, y=y, recipe="INVALID RECIPE", 
+        #         splits_to_return="train_test", train_valid_prop=0.5)
+
+        with pytest.raises(AssertionError):
+                X_train, X_valid, X_test, y_train, y_valid, y_test = mealprep.make_recipe(
+                X=X, y=y, recipe="ohe_and_standard_scaler", 
+                splits_to_return="INVALID SPLIT COMMAND", train_valid_prop=0.5)
+        
+        return None
