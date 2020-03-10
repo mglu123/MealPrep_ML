@@ -169,7 +169,6 @@ def find_bad_apples(df):
     # Initializes empty dataframe
     output = pd.DataFrame(columns=['Variable', 'Indices', 'Total Outliers'])
 
-    # Initializes column counter
     c = 0
 
     for column in columns:
