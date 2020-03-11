@@ -104,81 +104,15 @@ preprocess data in one line of code.
 
 ## Examples
 
+### `find_bad_apples()`
+
+First, load the required packages.
 
 ``` python
 from mealprep import mealprep
 import pandas as pd
 ```
 
-### `find_fruits_veg()`
-
-### `find_missing_ingredients()`
-
-### `find_bad_apples()`
-
-
-### `make_recipe()`
-
-Do you find yourslef constantly applying the same data preprocessing
-techniques time and time again? `make_recipe` can help by applying your
-favourite preprocessing recips in only a few lines of code.
-
-Below `make_recipe` applies the following common recipe in only one line
-of code:
-
-1.  Split data into training, validation, and testing
-2.  Standardise and scale numeric features
-3.  One hot encode categorical features
-
-First load the classic `mtcars` data set.
-
-``` python
->>> from mealprep import mealprep
->>> import pandas as pd
->>> import numpy as np
->>> from vega_datasets import data
-
->>> df = pd.read_json(data.cars.url).drop(columns=["Year"])
->>> X = df.drop(columns=["Name"])
->>> y = df[["Name"]
-    
->>> df.info()
-# <class 'pandas.core.frame.DataFrame'>
-# RangeIndex: 406 entries, 0 to 405
-# Data columns (total 8 columns):
-#  #   Column            Non-Null Count  Dtype  
-# ---  ------            --------------  -----  
-#  0   Name              406 non-null    object 
-#  1   Miles_per_Gallon  398 non-null    float64
-#  2   Cylinders         406 non-null    int64  
-#  3   Displacement      406 non-null    float64
-#  4   Horsepower        400 non-null    float64
-#  5   Weight_in_lbs     406 non-null    int64  
-#  6   Acceleration      406 non-null    float64
-#  7   Origin            406 non-null    object 
-# dtypes: float64(4), int64(2), object(2)
-# memory usage: 25.5+ KB
-```
-
-Use `make_recipe` to quickly apply split your data and apply your
-favourite preprocessing
-techniques\!
-
-``` python
->>> X_train, X_valid, X_test, y_train, y_valid, y_test = mealprep.make_recipe(
-...    X=X, y=y, recipe="ohe_and_standard_scaler", 
-...    splits_to_return="train_test"
-... )
-
->>> X_train.head()
-#    Miles_per_Gallon  Cylinders  Displacement  Horsepower  Weight_in_lbs  Acceleration  x0_Europe  x0_Japan  x0_USA
-# 0         -1.524901   1.457871      1.722121    1.775523       2.315653     -1.285191        0.0       0.0     1.0
-# 1         -0.287181   0.327847      0.395050   -0.307445       0.248186      0.643767        0.0       0.0     1.0
-# 2         -0.699754  -1.367190     -1.028694   -0.145436      -0.586540     -0.652746        0.0       1.0     0.0
-# 3          0.573330  -0.802178     -0.466227   -0.307445      -0.165307     -0.020301        0.0       1.0     0.0
-# 4         -0.228241  -0.802178     -0.589266   -0.145436      -0.391955     -0.336523        0.0       1.0     0.0
-```
-=======
 If you don’t already have a dataframe to work with, run this code to set
 up a toy dataframe (`df`) for testing.
 
@@ -242,6 +176,74 @@ mealprep.find_bad_apples(df)
     ## 0        B     [17, 34]              2
     ## 1        C  [5, 14, 26]              3
 
+### `find_fruits_veg()`
+
+### `find_missing_ingredients()`
+
+### `make_recipe()`
+
+Do you find yourself constantly applying the same data preprocessing
+techniques time and time again? `make_recipe` can help by applying your
+favourite preprocessing recipes in only a few lines of code.
+
+Below `make_recipe` applies the following common recipe in only one line
+of code:
+
+1.  Split data into training, validation, and testing
+2.  Standardise and scale numeric features
+3.  One hot encode categorical features
+
+First, load the required packages.
+
+``` python
+>>> from mealprep import mealprep
+>>> import pandas as pd
+>>> import numpy as np
+>>> from vega_datasets import data
+```
+
+Then load the classic `mtcars` data set.
+
+``` python
+>>> df = pd.read_json(data.cars.url).drop(columns=["Year"])
+>>> X = df.drop(columns=["Name"])
+>>> y = df[["Name"]
+    
+>>> df.info()
+# <class 'pandas.core.frame.DataFrame'>
+# RangeIndex: 406 entries, 0 to 405
+# Data columns (total 8 columns):
+#  #   Column            Non-Null Count  Dtype  
+# ---  ------            --------------  -----  
+#  0   Name              406 non-null    object 
+#  1   Miles_per_Gallon  398 non-null    float64
+#  2   Cylinders         406 non-null    int64  
+#  3   Displacement      406 non-null    float64
+#  4   Horsepower        400 non-null    float64
+#  5   Weight_in_lbs     406 non-null    int64  
+#  6   Acceleration      406 non-null    float64
+#  7   Origin            406 non-null    object 
+# dtypes: float64(4), int64(2), object(2)
+# memory usage: 25.5+ KB
+```
+
+Use `make_recipe` to quickly apply split your data and apply your
+favourite preprocessing techniques\!
+
+``` python
+>>> X_train, X_valid, X_test, y_train, y_valid, y_test = mealprep.make_recipe(
+...    X=X, y=y, recipe="ohe_and_standard_scaler", 
+...    splits_to_return="train_test"
+... )
+
+>>> X_train.head()
+#    Miles_per_Gallon  Cylinders  Displacement  Horsepower  Weight_in_lbs  Acceleration  x0_Europe  x0_Japan  x0_USA
+# 0         -1.524901   1.457871      1.722121    1.775523       2.315653     -1.285191        0.0       0.0     1.0
+# 1         -0.287181   0.327847      0.395050   -0.307445       0.248186      0.643767        0.0       0.0     1.0
+# 2         -0.699754  -1.367190     -1.028694   -0.145436      -0.586540     -0.652746        0.0       1.0     0.0
+# 3          0.573330  -0.802178     -0.466227   -0.307445      -0.165307     -0.020301        0.0       1.0     0.0
+# 4         -0.228241  -0.802178     -0.589266   -0.145436      -0.391955     -0.336523        0.0       1.0     0.0
+```
 
 ### Documentation
 
@@ -255,5 +257,3 @@ UBC-MDS/cookiecutter-ubc-mds project template, modified from the
 [pyOpenSci/cookiecutter-pyopensci](https://github.com/pyOpenSci/cookiecutter-pyopensci)
 project template and the
 [audreyr/cookiecutter-pypackage](https://github.com/audreyr/cookiecutter-pypackage).
-
-## Examples
