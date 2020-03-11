@@ -182,9 +182,9 @@ def find_bad_apples(df):
 
         values = df.values[:, c]
         for value in values:
-            if ((mean - 2*sd) <= value <= (mean + 2*sd)) is True:
+            if ((mean - 2*sd) <= value <= (mean + 2*sd)) == True:
                 r += 1
-            elif ((mean - 2*sd) <= value <= (mean + 2*sd)) is False:
+            elif ((mean - 2*sd) <= value <= (mean + 2*sd)) == False:
                 ind.append(r)
                 tot += 1
                 r += 1
