@@ -320,7 +320,7 @@ version = ">=0.12"
 dev = ["pre-commit", "tox"]
 
 [[package]]
-category = "dev"
+category = "main"
 description = "A collection of helpful Python tools!"
 name = "pockets"
 optional = false
@@ -668,7 +668,7 @@ version = "1.0.1"
 test = ["pytest", "flake8", "mypy"]
 
 [[package]]
-category = "dev"
+category = "main"
 description = "Sphinx \"napoleon\" extension."
 name = "sphinxcontrib-napoleon"
 optional = false
@@ -807,7 +807,7 @@ docs = ["sphinx", "jaraco.packaging (>=3.2)", "rst.linker (>=1.9)"]
 testing = ["jaraco.itertools", "func-timeout"]
 
 [metadata]
-content-hash = "cb4942c48b8f30e6f3686809b31e1a8fef59cfdf0ce02d4f8dda5db76a21cc34"
+content-hash = "0a0a958b0a51876c428464e853f1eee2bfabf510aef42ffb4268a67ec3baa06f"
 python-versions = "^3.6.1"
 
 [metadata.files]
