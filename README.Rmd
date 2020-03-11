@@ -45,11 +45,36 @@ pip install -i https://test.pypi.org/simple/ mealprep
 
 ## Examples
 
+### `find_bad_apples()`
+
+First, load the required packages.
+
+```{python}
+from mealprep import mealprep
+import pandas as pd
+```
+
+If you don't already have a dataframe to work with, run this code to set up a toy dataframe (`df`) for testing.
+```{python}
+df = pd.DataFrame({'A' : [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+                             1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+                    'B' : [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,-100,
+                             1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,100],
+                    'C' : [1,1,1,1,1,19,1,1,1,1,1,1,1,1,19,1,1,1,1,
+                             1,1,1,1,1,1,1,19,1,1,1,1,1,1,1,1]})
+df
+```
+
+To find the outliers in the dataframe, run `mealprep.find_bad_apples(df)` and you'll get a dataframe that shows which columns have outliers, which rows they can be found in, and how many outliers are in those columns.
+
+```{python}
+mealprep.find_bad_apples(df)
+```
+
+
 ### `find_fruits_veg()`
 
 ### `find_missing_ingredients()`
-
-### `find_bad_apples()`
 
 ### `make_recipe()`
 
@@ -61,14 +86,18 @@ Below `make_recipe` applies the following common recipe in only one line of code
 2. Standardise and scale numeric features
 3. One hot encode categorical features
 
-First load the classic `mtcars` data set.
+First, load the required packages.
 
 ```python
 >>> from mealprep import mealprep
 >>> import pandas as pd
 >>> import numpy as np
 >>> from vega_datasets import data
+```
 
+Then load the classic `mtcars` data set.
+
+```python
 >>> df = pd.read_json(data.cars.url).drop(columns=["Year"])
 >>> X = df.drop(columns=["Name"])
 >>> y = df[["Name"]
@@ -107,6 +136,7 @@ Use `make_recipe` to quickly apply split your data and apply your favourite prep
 # 3          0.573330  -0.802178     -0.466227   -0.307445      -0.165307     -0.020301        0.0       1.0     0.0
 # 4         -0.228241  -0.802178     -0.589266   -0.145436      -0.391955     -0.336523        0.0       1.0     0.0
 ```
+
 
 ### Documentation
 The official documentation is hosted on Read the Docs: <https://mealprep.readthedocs.io/en/latest/>

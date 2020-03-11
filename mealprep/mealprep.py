@@ -71,19 +71,17 @@ def find_missing_ingredients(data):
 
     """
     assert type(data) == pd.core.frame.DataFrame, "Input path should be a pandas data frame"
-
     assert data.shape[0] >= 1, "The input data frame has no rows"
-    
+
     if np.sum(np.sum(data.isna(), axis=0)) == 0:
         return "There are no missing values"
-        
+
     counts = np.sum(data.isna(),axis=0)
     indices = []
     
     for column in counts.index:
         indices.append(data[column][data[column].isna()].index.values)
-    
-    
+
     else:
         report = pd.DataFrame({'NaN count': counts, 
                                'NaN proportion': counts/data.shape[0],
@@ -94,20 +92,24 @@ def find_missing_ingredients(data):
 
         return report    
 
-    
+ 
 def find_bad_apples(df):
     '''
     This function uses a univariate approach to outlier detection.
-    For each column with outliers (values that are 2 or more standard deviations from the mean),
-    this function will create a reference list of row indices with outliers, and
-    the total number of outliers in that column.
-
-    Note: This function works best for small datasets with unimodal variable distributions.
-    Note: If your dataframe has duplicate column names, only the last of the duplicated columns will be checked.
+    For each column with outliers (values that are 2 or more
+    standard deviations from the mean),
+    this function will create a reference list of row indices with
+    outliers, and the total number of outliers in that column.
+    Note:
+    This function works best for small datasets with
+    unimodal variable distributions.
+    Note:
+    If your dataframe has duplicate column names,
+    only the last of the duplicated columns will be checked.
 
     Parameters
     -----------
-    df : pandas.DataFrame
+    df : pandas.core.frame.DataFrame
         A dataframe containing numeric data
 
     Returns
@@ -123,23 +125,27 @@ def find_bad_apples(df):
     >>> df = pd.DataFrame({'A' : ['test', 1, 1, 1, 1])
     >>> find_bad_apples(df)
     AssertionError: Every column in your dataframe must be numeric.
-
     >>> df = pd.DataFrame({'A' : [1, 1, 1, 1, 1],
     ...                    'B' : [10000, 1, 1, 1, 1]})
     >>> find_bad_apples(df)
-    AssertionError: Sorry, you don't have enough data. The dataframe needs to have at least 30 rows.
-
-    >>> df = pd.DataFrame({'A' : [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
-    ...                    'B' : [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,-100,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,100],
-    ...                    'C' : [1,1,1,1,1,19,1,1,1,1,1,1,1,1,19,1,1,1,1,1,1,1,1,1,1,1,19,1,1,1,1,1,1,1,1]})
+    AssertionError: Sorry, you don't have enough data.
+    The dataframe needs to have at least 30 rows.
+    >>> df = pd.DataFrame({'A' : [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+    ...                             1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+    ...                    'B' : [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,-100,
+    ...                             1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,100],
+    ...                    'C' : [1,1,1,1,1,19,1,1,1,1,1,1,1,1,19,1,1,1,1,
+    ...                             1,1,1,1,1,1,1,19,1,1,1,1,1,1,1,1]})
     >>> find_bad_apples(df)
     Variable      Indices     Total Outliers
         B         [17, 34]          2
         C      [5, 14, 26]          3
-        
-    >>> df = pd.DataFrame({'A' : [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
-    ...                    'B' : [1.000001, 1.000001, 1.000001, 1.000001, 1.000001, 1.000001, 1.000001, 1.000001,
-    ...                           1.000001, 1.000001, 1.000001, 1.000001, 1.000001, 1.000001, 1.000001,
+    >>> df = pd.DataFrame({'A' : [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+    ...                             1,1,1,1,1,1,1,1,1,1,1,1,1],
+    ...                    'B' : [1.000001, 1.000001, 1.000001, 1.000001,
+    ...                           1.000001, 1.000001, 1.000001, 1.000001,
+    ...                           1.000001, 1.000001, 1.000001, 1.000001,
+    ...                           1.000001, 1.000001, 1.000001,
     ...                           1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]})
     >>> find_bad_apples(df))
     Variable                Indices     Total Outliers
@@ -147,58 +153,58 @@ def find_bad_apples(df):
     '''
 
     # Checks that every column in the dataframe is numeric
-    assert df.select_dtypes(include=['float', 'int']).shape[1] == df.shape[1], 'Every column in your dataframe must be numeric.'
+    assert df.select_dtypes(include=['float', 'int']).shape[1] == df.shape[1],\
+        'Every column in your dataframe must be numeric.'
 
     # Checks that there are at least 30 rows in the dataframe
-    assert df.shape[0] >= 30, 'Sorry, you don\'t have enough data. The dataframe needs to have at least 30 rows.'
+    assert df.shape[0] >= 30, \
+        'Sorry, you don\'t have enough data. \
+        The dataframe needs to have at least 30 rows.'
 
     columns = list(df)
 
     # Initializes empty dataframe
-    output = pd.DataFrame(columns = ['Variable', 'Indices', 'Total Outliers'])
+    output = pd.DataFrame(columns=['Variable', 'Indices', 'Total Outliers'])
 
-    # Initializes column counter
     c = 0
 
     for column in columns:
-
-        # Finds the mean and standard deviation values for the column
-        mean = df.mean(axis = 0)[c]
+        mean = df.mean(axis=0)[c]
         sd = np.std(df.iloc[:, c])
 
-        # Initializes the column value (col), list of indices (ind), and total outliers (tot) values that will be output
         col = column
         ind = []
         tot = 0
-
-        # Initializes the row counter
         r = 0
 
-        values = df.values[:,c]
+        values = df.values[:, c]
         for value in values:
-            # If the value is between 2 standard deviations of the column mean, move on to the next value
-            if ((mean - 2*sd) <= value <= (mean + 2*sd)) == True:
+            if bool((mean - 2*sd) <= value & value <= (mean + 2*sd)) is True:
                 r += 1
-            # If the value is not between 2 standard deviations of the column mean, add the value index to the indices list, and add 1 to the total
-            elif ((mean - 2*sd) <= value <= (mean + 2*sd)) == False:
+            elif bool((mean - 2*sd) <= value & value <= (mean + 2*sd)) is False:
                 ind.append(r)
                 tot += 1
                 r += 1
         c += 1
-        
-        # If the column has outlier values (values more than 2 standard deviations from the column mean), append it to the output; otherwise, move on to the next column
+
         if tot == 0:
             continue
         else:
-            output = output.append({'Variable' : col, 'Indices' : ind, 'Total Outliers' : tot}, ignore_index = True)
+            output = output.append({'Variable': col,
+                                    'Indices': ind,
+                                    'Total Outliers': tot},
+                                   ignore_index=True)
 
     if len(output) == 0:
-        output = output.append({'Variable' : 'No outliers detected', 'Indices' : 'x', 'Total Outliers' : tot}, ignore_index = True)
+        output = output.append({'Variable': 'No outliers detected',
+                                'Indices': 'x',
+                                'Total Outliers': tot},
+                               ignore_index=True)
         return output
     else:
         return output
 
-
+      
 def make_recipe(
     X, y, recipe, splits_to_return="train_test", random_seed=None, train_valid_prop=0.8
 ):
