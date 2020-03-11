@@ -5,6 +5,11 @@ description = "Python package that ease the pain in fpre-processing like outlier
 authors = ["luhuayue <luhuayueapp@163.com>"]
 license = "MIT"
 
+readme = "README.md"
+homepage = "https://github.com/UBC-MDS/mealprep"
+repository = "https://github.com/UBC-MDS/mealprep"
+documentation = 'https://mealprep.readthedocs.io'
+
 [tool.poetry.dependencies]
 python = "^3.6.1"
 pandas = "^1.0.1"
@@ -13,6 +18,7 @@ sklearn = "^0.0"
 flake8 = "^3.7.9"
 codecov = "^2.0.16"
 python-semantic-release = "^4.10.0"
+sphinxcontrib-napoleon = "^0.7"
 
 [tool.poetry.dev-dependencies]
 pytest = "^5.3.5"
