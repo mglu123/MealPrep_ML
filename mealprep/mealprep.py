@@ -2,8 +2,7 @@ import numpy as np
 import pandas as pd
 from sklearn.compose import ColumnTransformer
 from sklearn.model_selection import train_test_split
-from sklearn.preprocessing import (Normalizer, OneHotEncoder, StandardScaler,
-                                   normalize, scale)
+from sklearn.preprocessing import OneHotEncoder, StandardScaler
 
 
 def find_fruits_veg(df, type_of_out='categ'):
@@ -232,8 +231,8 @@ def make_recipe(
         A dataframe containing training, validation, and testing response.
     recipe : str
         A string specifying which recipe to apply to the data. The only recipe
-        currently available is "ohe_and_standard_scaler". More recipes are under
-        development.
+        currently available is "ohe_and_standard_scaler". More recipes are
+        under development.
     splits_to_return : str, optional
         "train_test" to return train and test splits, "train_test_valid" to
         return train, test, and validation data, "train" to return all data
@@ -248,7 +247,8 @@ def make_recipe(
     Returns
     -------
     Tuple of pandas.DataFrame
-        A tuple of dataframes: (X_train, X_valid, X_test, y_train, y_valid, y_test)
+        A tuple of dataframes: (X_train, X_valid, X_test, y_train, y_valid,
+        y_test)
 
     Example
     --------
@@ -257,7 +257,7 @@ def make_recipe(
     >>> df = pd.read_json(data.cars.url).drop(columns=["Year"])
     >>> X = df.drop(columns=["Name"])
     >>> y = df[["Name"]]
-    >>> X_train, X_valid, X_test, y_train, y_valid, y_test = mealprep.make_recipe(
+    >>> X_tr X_va, X_te, y_tr, y_va, y_te = mealprep.make_recipe(
     ...        X=X, y=y, recipe="ohe_and_standard_scaler",
     ...        splits_to_return="train_test")
     """
