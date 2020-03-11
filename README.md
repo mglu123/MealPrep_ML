@@ -102,17 +102,83 @@ preprocess data in one line of code.
 
     pip install -i https://test.pypi.org/simple/ mealprep
 
-### Branch Coverage 
+## Examples
 
-To get the branch coverage, run the following command line code:
-
+``` python
+from mealprep import mealprep
+import pandas as pd
 ```
-poetry run pytest --cov-branch --cov=mealprep
+
+### `find_fruits_veg()`
+
+### `find_missing_ingredients()`
+
+### `find_bad_apples()`
+
+If you don’t already have a dataframe to work with, run this code to set
+up a toy dataframe (`df`) for testing.
+
+``` python
+df = pd.DataFrame({'A' : [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+                             1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+                    'B' : [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,-100,
+                             1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,100],
+                    'C' : [1,1,1,1,1,19,1,1,1,1,1,1,1,1,19,1,1,1,1,
+                             1,1,1,1,1,1,1,19,1,1,1,1,1,1,1,1]})
+df
 ```
 
-The coverage result is shown below:
+    ##     A    B   C
+    ## 0   1    1   1
+    ## 1   1    1   1
+    ## 2   1    1   1
+    ## 3   1    1   1
+    ## 4   1    1   1
+    ## 5   1    1  19
+    ## 6   1    1   1
+    ## 7   1    1   1
+    ## 8   1    1   1
+    ## 9   1    1   1
+    ## 10  1    1   1
+    ## 11  1    1   1
+    ## 12  1    1   1
+    ## 13  1    1   1
+    ## 14  1    1  19
+    ## 15  1    1   1
+    ## 16  1    1   1
+    ## 17  1 -100   1
+    ## 18  1    1   1
+    ## 19  1    1   1
+    ## 20  1    1   1
+    ## 21  1    1   1
+    ## 22  1    1   1
+    ## 23  1    1   1
+    ## 24  1    1   1
+    ## 25  1    1   1
+    ## 26  1    1  19
+    ## 27  1    1   1
+    ## 28  1    1   1
+    ## 29  1    1   1
+    ## 30  1    1   1
+    ## 31  1    1   1
+    ## 32  1    1   1
+    ## 33  1    1   1
+    ## 34  1  100   1
 
-<img src='img/branch_coverage.png' width = 600  />
+To find the outliers in the dataframe, run
+`mealprep.find_bad_apples(df)` and you’ll get a dataframe that shows
+which columns have outliers, which rows they can be found in, and how
+many outliers are in those columns.
+
+``` python
+mealprep.find_bad_apples(df)
+```
+
+    ##   Variable      Indices Total Outliers
+    ## 0        B     [17, 34]              2
+    ## 1        C  [5, 14, 26]              3
+
+### `make_recipe()`
 
 ### Documentation
 

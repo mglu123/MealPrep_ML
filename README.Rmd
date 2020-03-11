@@ -45,7 +45,36 @@ Lastly, there are many great tools in the data science ecosystem for pre-process
 pip install -i https://test.pypi.org/simple/ mealprep
 ```
 
+## Examples
 
+```{python}
+from mealprep import mealprep
+import pandas as pd
+```
+
+### `find_fruits_veg()`
+
+### `find_missing_ingredients()`
+
+### `find_bad_apples()`
+
+If you don't already have a dataframe to work with, run this code to set up a toy dataframe (`df`) for testing.
+```{python}
+df = pd.DataFrame({'A' : [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+                             1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+                    'B' : [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,-100,
+                             1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,100],
+                    'C' : [1,1,1,1,1,19,1,1,1,1,1,1,1,1,19,1,1,1,1,
+                             1,1,1,1,1,1,1,19,1,1,1,1,1,1,1,1]})
+df
+```
+
+To find the outliers in the dataframe, run `mealprep.find_bad_apples(df)` and you'll get a dataframe that shows which columns have outliers, which rows they can be found in, and how many outliers are in those columns.
+```{python}
+mealprep.find_bad_apples(df)
+```
+
+### `make_recipe()`
 
 ### Documentation
 The official documentation is hosted on Read the Docs: <https://mealprep.readthedocs.io/en/latest/>

@@ -10,6 +10,8 @@ python = "^3.6.1"
 pandas = "^1.0.1"
 vega_datasets = "^0.8.0"
 sklearn = "^0.0"
+flake8 = "^3.7.9"
+codecov = "^2.0.16"
 
 [tool.poetry.dev-dependencies]
 pytest = "^5.3.5"
