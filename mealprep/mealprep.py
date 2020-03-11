@@ -6,11 +6,11 @@ from sklearn.preprocessing import (Normalizer, OneHotEncoder, StandardScaler,
                                    normalize, scale)
 
 
-def find_fruits_veg(df, type_of_out = 'categ'):
+def find_fruits_veg(df, type_of_out='categ'):
     '''
     This function will drop row with NAs and find the index of columns with all
     numeric value or categorical value based on the specification.
-    
+
     Parameters
     -----------
     df: pandas.core.frame.DataFrame
@@ -19,14 +19,14 @@ def find_fruits_veg(df, type_of_out = 'categ'):
         Type of columns that we want to know index of
     list_of_index: list
         list of index value
-   
+
     Returns
     -------
     list_of_categ: list
         list of index of categorical value
     list_of_num: list
         list of index of numerical value
-    
+
     Example
     --------
     >>> df = pd.DataFrame({'col1': [1, 2], 'col2': ['a', 'b']})
@@ -39,19 +39,19 @@ def find_fruits_veg(df, type_of_out = 'categ'):
     if df_clean.shape[0] == 0:
         return "It is a empty data frame or too many missing data"
     for i in np.arange(df_clean.shape[1]):
-        if type(df_clean.iloc[0,i]) == str:
+        if isinstance(df_clean.iloc[0, i], str):
             list_of_categ += [i]
-        elif type(df_clean.iloc[0,i]) != str:
+        elif not isinstance(df_clean.iloc[0, i], str):
             list_of_num += [i]
-    if type_of_out== 'categ':
+    if type_of_out == 'categ':
         return list_of_categ
-    elif type_of_out== 'num':
+    elif type_of_out == 'num':
         return list_of_num
-    
+
 
 def find_missing_ingredients(data):
-    """For each column with missing values, this function will create a reference list of row indices, 
-    sum the number and calculate proportion of missing values 
+    """For each column with missing values, this function will create a reference list of row indices,
+    sum the number and calculate proportion of missing values
 
     Parameters
     -----------
@@ -70,29 +70,31 @@ def find_missing_ingredients(data):
     'There are no missing values'
 
     """
-    assert type(data) == pd.core.frame.DataFrame, "Input path should be a pandas data frame"
+    assert isinstance(
+        data, pd.core.frame.DataFrame), "Input path should be a pandas data frame"
     assert data.shape[0] >= 1, "The input data frame has no rows"
 
     if np.sum(np.sum(data.isna(), axis=0)) == 0:
         return "There are no missing values"
 
-    counts = np.sum(data.isna(),axis=0)
+    counts = np.sum(data.isna(), axis=0)
     indices = []
-    
+
     for column in counts.index:
         indices.append(data[column][data[column].isna()].index.values)
 
     else:
-        report = pd.DataFrame({'NaN count': counts, 
-                               'NaN proportion': counts/data.shape[0],
+        report = pd.DataFrame({'NaN count': counts,
+                               'NaN proportion': counts / data.shape[0],
                                'NaN indices': indices}).reset_index()
 
-        report['NaN proportion'] = pd.Series(["{0:.1f}%".format(val*100) for val in report['NaN proportion']])
+        report['NaN proportion'] = pd.Series(
+            ["{0:.1f}%".format(val * 100) for val in report['NaN proportion']])
         report = report.rename(columns={"index": 'Column name'})
 
-        return report    
+        return report
 
- 
+
 def find_bad_apples(df):
     '''
     This function uses a univariate approach to outlier detection.
@@ -179,9 +181,15 @@ def find_bad_apples(df):
 
         values = df.values[:, c]
         for value in values:
-            if bool((mean - 2*sd) <= value & value <= (mean + 2*sd)) is True:
+            if bool(
+                (mean -
+                 2 *
+                 sd) <= value & value <= (
+                    mean +
+                    2 *
+                    sd)) is True:
                 r += 1
-            elif bool((mean - 2*sd) <= value & value <= (mean + 2*sd)) is False:
+            elif bool((mean - 2 * sd) <= value & value <= (mean + 2 * sd)) is False:
                 ind.append(r)
                 tot += 1
                 r += 1
@@ -204,14 +212,18 @@ def find_bad_apples(df):
     else:
         return output
 
-      
+
 def make_recipe(
-    X, y, recipe, splits_to_return="train_test", random_seed=None, train_valid_prop=0.8
-):
+        X,
+        y,
+        recipe,
+        splits_to_return="train_test",
+        random_seed=None,
+        train_valid_prop=0.8):
     """
-    The `make_recipe()` function is used to quickly apply common data 
+    The `make_recipe()` function is used to quickly apply common data
     preprocessing techniques
-    
+
     Parameters
     ----------
     X : pandas.DataFrame
@@ -219,35 +231,35 @@ def make_recipe(
     y : pandas.DataFrame
         A dataframe containing training, validation, and testing response.
     recipe : str
-        A string specifying which recipe to apply to the data. The only recipe 
-        currently available is "ohe_and_standard_scaler". More recipes are under 
+        A string specifying which recipe to apply to the data. The only recipe
+        currently available is "ohe_and_standard_scaler". More recipes are under
         development.
     splits_to_return : str, optional
-        "train_test" to return train and test splits, "train_test_valid" to 
-        return train, test, and validation data, "train" to return all data 
+        "train_test" to return train and test splits, "train_test_valid" to
+        return train, test, and validation data, "train" to return all data
         without splits. By default "train_test".
     random_seed : int, optional
-        The random seed to set for splitting data to create reproducible 
+        The random seed to set for splitting data to create reproducible
         results. By default None.
     train_valid_prop : float, optional
-        The proportion to split the data by. Should range between 0 to 1. By 
+        The proportion to split the data by. Should range between 0 to 1. By
         default = 0.8
-    
+
     Returns
     -------
     Tuple of pandas.DataFrame
         A tuple of dataframes: (X_train, X_valid, X_test, y_train, y_valid, y_test)
-    
+
     Example
     --------
     >>> from vega_datasets import data
     >>> from mealprep.mealprep import make recipe
     >>> df = pd.read_json(data.cars.url).drop(columns=["Year"])
     >>> X = df.drop(columns=["Name"])
-    >>> y = df[["Name"]] 
+    >>> y = df[["Name"]]
     >>> X_train, X_valid, X_test, y_train, y_valid, y_test = mealprep.make_recipe(
-    ...        X=X, y=y, recipe="ohe_and_standard_scaler", 
-    ...        splits_to_return="train_test")    
+    ...        X=X, y=y, recipe="ohe_and_standard_scaler",
+    ...        splits_to_return="train_test")
     """
 
     # validate inputs
@@ -287,7 +299,9 @@ def make_recipe(
     numerics = ["int16", "int32", "int64", "float16", "float32", "float64"]
     categorics = ["object"]
     numeric_features = list(X_train.select_dtypes(include=numerics).columns)
-    categorical_features = list(X_train.select_dtypes(include=categorics).columns)
+    categorical_features = list(
+        X_train.select_dtypes(
+            include=categorics).columns)
 
     # preprocess data
     if recipe == "ohe_and_standard_scaler":
