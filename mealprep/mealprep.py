@@ -1,4 +1,3 @@
-##Finding numeric and categorical variable names (HUAYUE LUKE)
 import numpy as np
 import pandas as pd
 from sklearn.compose import ColumnTransformer
@@ -50,7 +49,6 @@ def find_fruits_veg(df, type_of_out = 'categ'):
         return list_of_num
     
 
-##Identifying which columns have missing values, how many they have, and the proportion (JAROME)
 def find_missing_ingredients(data):
     """For each column with missing values, this function will create a reference list of row indices, 
     sum the number and calculate proportion of missing values 
@@ -97,12 +95,6 @@ def find_missing_ingredients(data):
         return report    
 
     
-
-
-    
-
-
-##Outlier checking (ANNY)
 def find_bad_apples(df):
     '''
     This function uses a univariate approach to outlier detection.
@@ -210,7 +202,9 @@ def find_bad_apples(df):
 def make_recipe(
     X, y, recipe, splits_to_return="train_test", random_seed=None, train_valid_prop=0.8
 ):
-    """The `make_recipe()` function is used to quickly apply common data preprocessing techniques
+    """
+    The `make_recipe()` function is used to quickly apply common data 
+    preprocessing techniques
     
     Parameters
     ----------
@@ -219,13 +213,19 @@ def make_recipe(
     y : pandas.DataFrame
         A dataframe containing training, validation, and testing response.
     recipe : str
-        A string specifying which recipe to apply to the data. The only recipe currently available is "ohe_and_standard_scaler". More recipes are under development.
+        A string specifying which recipe to apply to the data. The only recipe 
+        currently available is "ohe_and_standard_scaler". More recipes are under 
+        development.
     splits_to_return : str, optional
-        "train_test" to return train and test splits, "train_test_valid" to return train, test, and validation data, "train" to return all data without splits. By default "train_test".
+        "train_test" to return train and test splits, "train_test_valid" to 
+        return train, test, and validation data, "train" to return all data 
+        without splits. By default "train_test".
     random_seed : int, optional
-        The random seed to set for splitting data to create reproducible results. By default None.
+        The random seed to set for splitting data to create reproducible 
+        results. By default None.
     train_valid_prop : float, optional
-        The proportion to split the data by. Should range between 0 to 1. By default = 0.8
+        The proportion to split the data by. Should range between 0 to 1. By 
+        default = 0.8
     
     Returns
     -------
@@ -259,8 +259,6 @@ def make_recipe(
     # clean input data
     y = y.to_numpy().ravel()
 
-    # TODO: add parmeter for setting train, test, valid split size
-
     # split data
     if splits_to_return == "train_test":
         X_train, X_test, y_train, y_test = train_test_split(
@@ -278,11 +276,6 @@ def make_recipe(
             test_size=train_valid_prop,
             random_state=random_seed,
         )
-        
-    # else:
-    #     raise Exception(
-    #         "splits_to_return should be either 'train_test' or 'train_test_valid'."
-    #     )
 
     # determine column type
     numerics = ["int16", "int32", "int64", "float16", "float32", "float64"]
@@ -294,8 +287,6 @@ def make_recipe(
     if recipe == "ohe_and_standard_scaler":
         numeric_transformer = StandardScaler()
         categorical_transformer = OneHotEncoder(handle_unknown="ignore")
-    # else:
-    #     raise Exception("Please select a valid string option for recipe.")
 
     preprocessor = ColumnTransformer(
         transformers=[
