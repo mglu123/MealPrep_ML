@@ -43,18 +43,15 @@ def test_find_missing_ingredients_outputs():
     df1 = pd.DataFrame(test1)
 
     output = find_missing_ingredients(df1)
-    assert(output.query('index == 0')['NaN count'].values[0] == 0)
-    assert(output.query('index == 1')['NaN count'].values[0] == 1)
-    assert(output.query('index == 2')['NaN count'].values[0] == 4)
+    assert(output.query('index == 0')['NaN count'].values[0] == 1)
+    assert(output.query('index == 1')['NaN count'].values[0] == 4)
 
-    assert(output.query('index == 0')['NaN proportion'].values[0] == '0.0%')
-    assert(output.query('index == 1')['NaN proportion'].values[0] == '25.0%')
-    assert(output.query('index == 2')['NaN proportion'].values[0] == '100.0%')
+    assert(output.query('index == 0')['NaN proportion'].values[0] == '25.0%')
+    assert(output.query('index == 1')['NaN proportion'].values[0] == '100.0%')
 
-    assert(output.query('index == 0')['NaN indices'].values[0].size == 0)
-    assert(output.query('index == 1')['NaN indices'].values[0] ==
+    assert(output.query('index == 0')['NaN indices'].values[0] ==
            np.array([2]))
-    assert(np.all(output.query('index == 2')['NaN indices'].values[0] ==
+    assert(np.all(output.query('index == 1')['NaN indices'].values[0] ==
            np.array([0, 1, 2, 3])))
 
     test2 = {'column1': [1, 2, 3], 'column2': [4, 5, 6]}
