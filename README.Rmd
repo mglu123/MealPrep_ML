@@ -74,7 +74,7 @@ mealprep.find_bad_apples(df)
 
 ### `find_fruits_veg()`
 
-find_fruits_veg() will help you find the wanted columns index. 
+find_fruits_veg() will help you find the column indices for either numerical or categorical variables in your data frame. 
 The example below shows how to use find_fruits_veg() to find categorical columns' index of a toy data frame.
 
 First, load the required packages.
