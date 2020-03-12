@@ -25,6 +25,7 @@ pytest = "^5.3.5"
 pytest-cov = "^2.8.1"
 sphinx = "^2.4.4"
 sphinxcontrib-napoleon = "^0.7"
+vega_datasets = "^0.8.0"
 
 [tool.semantic_release]
 version_variable = "mealprep/__init__.py:__version__"
