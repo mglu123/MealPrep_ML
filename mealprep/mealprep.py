@@ -49,7 +49,9 @@ def find_fruits_veg(df, type_of_out='categ'):
 
 
 def find_missing_ingredients(data):
-    """For each column with missing values, this function will create a reference list of row indices,
+    """
+    For each column with missing values,
+    this function will create a reference list of row indices,
     sum the number and calculate proportion of missing values
 
     Parameters
@@ -60,17 +62,19 @@ def find_missing_ingredients(data):
     Returns
     -------
     pandas.core.frame.DataFrame
-        Data frame summarizing the indexes, count and proportion of missing values in each column
+        Data frame summarizing the indexes,
+        count and proportion of missing values in each column
 
     Example
     --------
-    >>> df = data.frame("letters" = c("a","b","c"),"numbers" = c(1,2,3))
+    >>> df = data.frame("letters" = c("a","b","c"),
+                        "numbers" = c(1,2,3))
     >>> find_missing_ingredients(df)
     'There are no missing values'
 
     """
-    assert isinstance(
-        data, pd.core.frame.DataFrame), "Input path should be a pandas data frame"
+    assert isinstance(data, pd.core.frame.DataFrame), \
+        "Input path should be a pandas data frame"
     assert data.shape[0] >= 1, "The input data frame has no rows"
 
     if np.sum(np.sum(data.isna(), axis=0)) == 0:
@@ -188,7 +192,8 @@ def find_bad_apples(df):
                     2 *
                     sd)) is True:
                 r += 1
-            elif bool((mean - 2 * sd) <= value & value <= (mean + 2 * sd)) is False:
+            elif bool((mean - 2 * sd) <= value &
+                      value <= (mean + 2 * sd)) is False:
                 ind.append(r)
                 tot += 1
                 r += 1
