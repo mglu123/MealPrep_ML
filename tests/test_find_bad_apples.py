@@ -87,10 +87,14 @@ def test_pos_neg():
                             1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
                             1, 1, 1, 1, 1, 1, 1, 1, 1, 1]})
 
-    df_answer3 = pd.DataFrame({'Variable': 'A',
-                              'Indices': [[0, 1]], 'Total Outliers': 2})
-    assert_frame_equal(find_bad_apples(df_test3),
-                       df_answer3, check_dtype=False)
+    # df_answer3 = pd.DataFrame({'Variable': 'A',
+    #                           'Indices': [[0, 1]], 'Total Outliers': 2})
+    output3 = find_bad_apples(df_test3)
+    # assert_frame_equal(find_bad_apples(df_test3),
+    #                    df_answer3, check_dtype=False)
+    assert(output3.query('index == 0')['Variable'].values[0] == 'A')
+    assert(output3.query('index == 0')['Indices'].values[0] == [0,1])
+    assert(output3.query('index == 0')['Total Outliers'].values[0] == 2)
 
 
 # Checks Item 4
@@ -151,8 +155,14 @@ def test_one_col():
     df_answer5 = pd.DataFrame({'Variable': ['A'],
                               'Indices': [[2]], 'Total Outliers': [1]})
 
-    assert_frame_equal(find_bad_apples(df_test5),
-                       df_answer5, check_dtype=False)
+    output5 = find_bad_apples(df_test5)
+    # assert_frame_equal(find_bad_apples(df_test5),
+    #                    df_answer5, check_dtype=False)
+
+    assert(output5.query('index == 0')['Variable'].values[0] == 'A')
+    assert(output5.query('index == 0')['Indices'].values[0] == [2])
+    assert(output5.query('index == 0')['Total Outliers'].values[0] == 1)
+
 
 
 # Checks Item 6
