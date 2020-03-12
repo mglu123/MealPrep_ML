@@ -84,6 +84,7 @@ First, load the required packages.
 >>> import pandas as pd
 ```
 
+Then, apply the find_fruits_veg() function to the data frame.
 ```python
 >>> df = pd.DataFrame({'col1': [1, 2], 'col2': ['a', 'b']})
 >>> find_fruits_veg(df, type_of_out = 'categ')
