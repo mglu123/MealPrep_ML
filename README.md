@@ -245,8 +245,7 @@ Then load the classic `mtcars` data set.
 ```
 
 Use `make_recipe` to quickly apply split your data and apply your
-favourite preprocessing
-techniques\!
+favourite preprocessing techniques\!
 
 ``` python
 >>> X_train, X_valid, X_test, y_train, y_valid, y_test = mealprep.make_recipe(
