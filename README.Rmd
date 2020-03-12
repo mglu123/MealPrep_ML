@@ -74,6 +74,23 @@ mealprep.find_bad_apples(df)
 
 ### `find_fruits_veg()`
 
+find_fruits_veg() will help you find the column indices for either numerical or categorical variables in your data frame. 
+The example below shows how to use find_fruits_veg() to find the categorical columns' index of a toy data frame.
+
+First, load the required packages.
+
+``` python
+>>> from mealprep import mealprep
+>>> import pandas as pd
+```
+
+Then, apply the find_fruits_veg() function to the data frame.
+```python
+>>> df = pd.DataFrame({'col1': [1, 2], 'col2': ['a', 'b']})
+>>> find_fruits_veg(df, type_of_out = 'categ')
+# [1]
+```
+
 ### `find_missing_ingredients()`
 
 ### `make_recipe()`
