@@ -91,7 +91,41 @@ Then, apply the find_fruits_veg() function to the data frame.
 # [1]
 ```
 
+
 ### `find_missing_ingredients()`
+
+Before launching into a new data analysis, running the function `find_missing_ingredients()` on a data frame of interest will produce a report on each column with missing values.
+
+First, load the required packages
+
+```{python}
+from mealprep.mealprep import find_missing_ingredients
+import pandas as pd
+import numpy as np
+```
+
+
+Below are a few examples of `find_missing_ingredients()` in use.
+
+```{python}
+test1= {'column1': ['a', 'b', 'c', 'd'],
+       'column2': [1, 2, np.NaN, 3],
+       'column3': [np.NaN] * 4}
+   
+   
+df = pd.DataFrame(test1)
+
+df
+
+
+```
+
+```{python}
+
+find_missing_ingredients(df)
+
+```
+
 
 ### `make_recipe()`
 

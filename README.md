@@ -200,6 +200,46 @@ Then, apply the find\_fruits\_veg() function to the data frame.
 
 ### `find_missing_ingredients()`
 
+Before launching into a new data analysis, running the function
+`find_missing_ingredients()` on a data frame of interest will produce a
+report on each column with missing values.
+
+First, load the required packages
+
+``` python
+from mealprep.mealprep import find_missing_ingredients
+import pandas as pd
+import numpy as np
+```
+
+Below are a few examples of `find_missing_ingredients()` in use.
+
+``` python
+test1= {'column1': ['a', 'b', 'c', 'd'],
+       'column2': [1, 2, np.NaN, 3],
+       'column3': [np.NaN] * 4}
+   
+   
+df = pd.DataFrame(test1)
+
+df
+```
+
+    ##   column1  column2  column3
+    ## 0       a      1.0      NaN
+    ## 1       b      2.0      NaN
+    ## 2       c      NaN      NaN
+    ## 3       d      3.0      NaN
+
+``` python
+
+find_missing_ingredients(df)
+```
+
+    ##   Column name  NaN count NaN proportion   NaN indices
+    ## 0     column2          1          25.0%           [2]
+    ## 1     column3          4         100.0%  [0, 1, 2, 3]
+
 ### `make_recipe()`
 
 Do you find yourself constantly applying the same data preprocessing
@@ -248,7 +288,8 @@ Then load the classic `mtcars` data set.
 ```
 
 Use `make_recipe` to quickly apply split your data and apply your
-favourite preprocessing techniques\!
+favourite preprocessing
+techniques\!
 
 ``` python
 >>> X_train, X_valid, X_test, y_train, y_valid, y_test = mealprep.make_recipe(

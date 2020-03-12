@@ -81,10 +81,13 @@ def find_missing_ingredients(data):
         return "There are no missing values"
 
     counts = np.sum(data.isna(), axis=0)
+    counts = counts[counts>0]
     indices = []
+    
+    for column in data.columns:
+        if np.sum(data[column].isna()):
+            indices.append(data[column][data[column].isna()].index.values)
 
-    for column in counts.index:
-        indices.append(data[column][data[column].isna()].index.values)
 
     else:
         report = pd.DataFrame({'NaN count': counts,
