@@ -1,7 +1,6 @@
 from mealprep.mealprep import find_bad_apples
 import pandas as pd
 import pytest
-#from pandas._testing import assert_frame_equal
 
 
 # Checks Item 1
@@ -87,13 +86,9 @@ def test_pos_neg():
                             1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
                             1, 1, 1, 1, 1, 1, 1, 1, 1, 1]})
 
-    # df_answer3 = pd.DataFrame({'Variable': 'A',
-    #                           'Indices': [[0, 1]], 'Total Outliers': 2})
     output3 = find_bad_apples(df_test3)
-    # assert_frame_equal(find_bad_apples(df_test3),
-    #                    df_answer3, check_dtype=False)
     assert(output3.query('index == 0')['Variable'].values[0] == 'A')
-    assert(output3.query('index == 0')['Indices'].values[0] == [0,1])
+    assert(output3.query('index == 0')['Indices'].values[0] == [0, 1])
     assert(output3.query('index == 0')['Total Outliers'].values[0] == 2)
 
 
@@ -121,15 +116,11 @@ def test_no_bad_apples():
                             1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
                             1, 1, 1, 1, 1, 1, 1, 1, 1, 1]})
 
-    df_answer4 = pd.DataFrame({'Variable': ['No outliers detected'],
-                              'Indices': 'x', 'Total Outliers': 0})
-    
     output = test_no_bad_apples(df_test4)
-    assert(output.query('index == 0')['Variable'].values[0] == 'No outliers detected')
+    assert(output.query('index == 0')['Variable'].values[0] ==
+           'No outliers detected')
     assert(output.query('index == 0')['Indices'].values[0] == 'x')
-        assert(output.query('index == 0')['Total Outliers'].values[0] == 0)
-    #assert_frame_equal(find_bad_apples(df_test4),
-    #                   df_answer4, check_dtype=False)
+    assert(output.query('index == 0')['Total Outliers'].values[0] == 0)
 
 
 # Checks Item 5
@@ -156,17 +147,10 @@ def test_one_col():
                             1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
                             1, 1, 1, 1, 1, 1, 1, 1, 1, 1]})
 
-    df_answer5 = pd.DataFrame({'Variable': ['A'],
-                              'Indices': [[2]], 'Total Outliers': [1]})
-
     output5 = find_bad_apples(df_test5)
-    # assert_frame_equal(find_bad_apples(df_test5),
-    #                    df_answer5, check_dtype=False)
-
     assert(output5.query('index == 0')['Variable'].values[0] == 'A')
     assert(output5.query('index == 0')['Indices'].values[0] == [2])
     assert(output5.query('index == 0')['Total Outliers'].values[0] == 1)
-
 
 
 # Checks Item 6
@@ -197,17 +181,10 @@ def test_two_col():
                                   1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
                                   1, 1, 1, 1, 1, 1, 1, 1, 1, 10]})
 
-    df_answer6 = pd.DataFrame({'Variable': ['A', 'B'],
-                              'Indices': [[2], [29]],
-                               'Total Outliers': [1, 1]})
-
     output = test_no_bad_apples(df_test6)
     assert(output.query('index == 0')['Variable'].values[0] == 'A')
     assert(output.query('index == 0')['Indices'].values[0] == [2])
     assert(output.query('index == 0')['Total Outliers'].values[0] == 1)
-    
     assert(output.query('index == 1')['Variable'].values[0] == 'B')
     assert(output.query('index == 1')['Indices'].values[0] == [29])
     assert(output.query('index == 1')['Total Outliers'].values[0] == 1)
- #   assert_frame_equal(find_bad_apples(df_test6),
- #                      df_answer6, check_dtype=False)
