@@ -10,7 +10,7 @@ output:
 
 [![Documentation Status](https://readthedocs.org/projects/mealprep/badge/?version=latest)](https://mealprep.readthedocs.io/en/latest/?badge=latest)
 
-Mealprep offers a toolkit, made with care, to help users save time in the data preprocessing kitchen.
+Mealprep offers a toolkit, made with care, to help users save time in the data preprocessing kitchen. 
 
 ## Overview
 
