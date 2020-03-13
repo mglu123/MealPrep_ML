@@ -176,8 +176,8 @@ def find_bad_apples(df):
     c = 0
 
     for column in columns:
-        mean = df.mean(axis=0)[c]
-        sd = np.std(df.iloc[:, c])
+        mean = round(df.mean(axis=0)[c], 3)
+        sd = round(np.std(df.iloc[:, c]), 3)
 
         col = column
         ind = []
