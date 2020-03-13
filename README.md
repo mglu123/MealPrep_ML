@@ -23,8 +23,8 @@ preprocessing recipe pipeline.
 ## Functions
 
 `find_fruits_veg()`: This function will drop rows with NAs and find the
-index of columns with all numeric value or categorical value based on
-the specification.
+indices of columns with all numeric values or categorical values based
+on the specification.
 
 `find_missing_ingredients()`: For each column with missing values, this
 function will create a reference list of row indices, sum the number,
@@ -104,12 +104,91 @@ preprocess data in one line of code.
 
 ## Examples
 
-### `find_bad_apples()`
+### `find_fruits_veg()`
+
+Find the column indices for either numerical or categorical variables in
+your dataframe with the `find_fruits_veg()` function. The example below
+shows how to use find\_fruits\_veg() to find the index of the
+categorical column in a toy dataframe.
 
 First, load the required packages.
 
 ``` python
-from mealprep import mealprep
+from mealprep.mealprep import find_fruits_veg
+import pandas as pd
+```
+
+If you don’t already have a dataframe to work with, run this code to set
+up a toy dataframe (`df`) for testing.
+
+``` python
+df = pd.DataFrame({'col1': [1, 2], 'col2': ['a', 'b']})
+df
+```
+
+    ##    col1 col2
+    ## 0     1    a
+    ## 1     2    b
+
+Then, apply the `find_fruits_veg()` function to the dataframe.
+
+``` python
+find_fruits_veg(df, type_of_out = 'categ')
+```
+
+    ## [1]
+
+### `find_missing_ingredients()`
+
+Before launching into a new data analysis, running the function
+`find_missing_ingredients()` on a dataframe of interest will produce a
+report on each column with missing values.
+
+First, load the required packages
+
+``` python
+from mealprep.mealprep import find_missing_ingredients
+import pandas as pd
+import numpy as np
+```
+
+If you don’t already have a dataframe to work with, run this code to set
+up a toy dataframe (`df`) for testing.
+
+``` python
+test1= {'column1': ['a', 'b', 'c', 'd'],
+       'column2': [1, 2, np.NaN, 3],
+       'column3': [np.NaN] * 4}
+   
+df = pd.DataFrame(test1)
+df
+```
+
+    ##   column1  column2  column3
+    ## 0       a      1.0      NaN
+    ## 1       b      2.0      NaN
+    ## 2       c      NaN      NaN
+    ## 3       d      3.0      NaN
+
+Then, apply the `find_missing_ingredients()` function to the dataframe.
+
+``` python
+find_missing_ingredients(df)
+```
+
+    ##   Column name  NaN count NaN proportion   NaN indices
+    ## 0     column2          1          25.0%           [2]
+    ## 1     column3          4         100.0%  [0, 1, 2, 3]
+
+### `find_bad_apples()`
+
+Find the outliers in your data by applying the `find_bad_apples()`
+function to your dataframe.
+
+First, load the required packages.
+
+``` python
+from mealprep.mealprep import find_bad_apples
 import pandas as pd
 ```
 
@@ -163,82 +242,15 @@ df
     ## 33  1    1   1
     ## 34  1  100   1
 
-To find the outliers in the dataframe, run
-`mealprep.find_bad_apples(df)` and you’ll get a dataframe that shows
-which columns have outliers, which rows they can be found in, and how
-many outliers are in those columns.
+Then, apply the `find_bad_apples()` function to the dataframe.
 
 ``` python
-mealprep.find_bad_apples(df)
+find_bad_apples(df)
 ```
 
     ##   Variable      Indices Total Outliers
     ## 0        B     [17, 34]              2
     ## 1        C  [5, 14, 26]              3
-
-### `find_fruits_veg()`
-
-find\_fruits\_veg() will help you find the column indices for either
-numerical or categorical variables in your data frame. The example below
-shows how to use find\_fruits\_veg() to find the categorical columns’
-index of a toy data frame.
-
-First, load the required packages.
-
-``` python
->>> from mealprep import mealprep
->>> import pandas as pd
-```
-
-Then, apply the find\_fruits\_veg() function to the data frame.
-
-``` python
->>> df = pd.DataFrame({'col1': [1, 2], 'col2': ['a', 'b']})
->>> find_fruits_veg(df, type_of_out = 'categ')
-# [1]
-```
-
-### `find_missing_ingredients()`
-
-Before launching into a new data analysis, running the function
-`find_missing_ingredients()` on a data frame of interest will produce a
-report on each column with missing values.
-
-First, load the required packages
-
-``` python
-from mealprep.mealprep import find_missing_ingredients
-import pandas as pd
-import numpy as np
-```
-
-Below are a few examples of `find_missing_ingredients()` in use.
-
-``` python
-test1= {'column1': ['a', 'b', 'c', 'd'],
-       'column2': [1, 2, np.NaN, 3],
-       'column3': [np.NaN] * 4}
-   
-   
-df = pd.DataFrame(test1)
-
-df
-```
-
-    ##   column1  column2  column3
-    ## 0       a      1.0      NaN
-    ## 1       b      2.0      NaN
-    ## 2       c      NaN      NaN
-    ## 3       d      3.0      NaN
-
-``` python
-
-find_missing_ingredients(df)
-```
-
-    ##   Column name  NaN count NaN proportion   NaN indices
-    ## 0     column2          1          25.0%           [2]
-    ## 1     column3          4         100.0%  [0, 1, 2, 3]
 
 ### `make_recipe()`
 
@@ -256,55 +268,58 @@ of code:
 First, load the required packages.
 
 ``` python
->>> from mealprep import mealprep
->>> import pandas as pd
->>> import numpy as np
->>> from vega_datasets import data
+from mealprep.mealprep import make_recipe
+import pandas as pd
+import numpy as np
+from vega_datasets import data
 ```
 
-Then load the classic `mtcars` data set.
+If you don’t already have a dataframe to work with, run this code to
+load the classic `mtcars` dataset for testing.
 
 ``` python
->>> df = pd.read_json(data.cars.url).drop(columns=["Year"])
->>> X = df.drop(columns=["Name"])
->>> y = df[["Name"]
+df = pd.read_json(data.cars.url).drop(columns=["Year"])
+X = df.drop(columns=["Name"])
+y = df[["Name"]]
     
->>> df.info()
-# <class 'pandas.core.frame.DataFrame'>
-# RangeIndex: 406 entries, 0 to 405
-# Data columns (total 8 columns):
-#  #   Column            Non-Null Count  Dtype  
-# ---  ------            --------------  -----  
-#  0   Name              406 non-null    object 
-#  1   Miles_per_Gallon  398 non-null    float64
-#  2   Cylinders         406 non-null    int64  
-#  3   Displacement      406 non-null    float64
-#  4   Horsepower        400 non-null    float64
-#  5   Weight_in_lbs     406 non-null    int64  
-#  6   Acceleration      406 non-null    float64
-#  7   Origin            406 non-null    object 
-# dtypes: float64(4), int64(2), object(2)
-# memory usage: 25.5+ KB
+df.info()
 ```
 
-Use `make_recipe` to quickly apply split your data and apply your
-favourite preprocessing
-techniques\!
+    ## <class 'pandas.core.frame.DataFrame'>
+    ## RangeIndex: 406 entries, 0 to 405
+    ## Data columns (total 8 columns):
+    ##  #   Column            Non-Null Count  Dtype  
+    ## ---  ------            --------------  -----  
+    ##  0   Name              406 non-null    object 
+    ##  1   Miles_per_Gallon  398 non-null    float64
+    ##  2   Cylinders         406 non-null    int64  
+    ##  3   Displacement      406 non-null    float64
+    ##  4   Horsepower        400 non-null    float64
+    ##  5   Weight_in_lbs     406 non-null    int64  
+    ##  6   Acceleration      406 non-null    float64
+    ##  7   Origin            406 non-null    object 
+    ## dtypes: float64(4), int64(2), object(2)
+    ## memory usage: 25.5+ KB
+
+Then, use `make_recipe` to quickly apply split your data and apply your
+favourite preprocessing techniques\!
 
 ``` python
->>> X_train, X_valid, X_test, y_train, y_valid, y_test = mealprep.make_recipe(
-...    X=X, y=y, recipe="ohe_and_standard_scaler", 
-...    splits_to_return="train_test"
-... )
+X_train, X_valid, X_test, y_train, y_valid, y_test = make_recipe(
+    X=X, y=y, recipe="ohe_and_standard_scaler", 
+    splits_to_return="train_test")
 
->>> X_train.head()
-#    Miles_per_Gallon  Cylinders  Displacement  Horsepower  Weight_in_lbs  Acceleration  x0_Europe  x0_Japan  x0_USA
-# 0         -1.524901   1.457871      1.722121    1.775523       2.315653     -1.285191        0.0       0.0     1.0
-# 1         -0.287181   0.327847      0.395050   -0.307445       0.248186      0.643767        0.0       0.0     1.0
-# 2         -0.699754  -1.367190     -1.028694   -0.145436      -0.586540     -0.652746        0.0       1.0     0.0
-# 3          0.573330  -0.802178     -0.466227   -0.307445      -0.165307     -0.020301        0.0       1.0     0.0
-# 4         -0.228241  -0.802178     -0.589266   -0.145436      -0.391955     -0.336523        0.0       1.0     0.0
+X_train.head()
 ```
+
+    ##    Miles_per_Gallon  Cylinders  Displacement  ...  x0_Europe  x0_Japan  x0_USA
+    ## 0          1.214510  -0.933900     -1.043335  ...        1.0       0.0     0.0
+    ## 1          1.160487  -0.933900     -0.958096  ...        0.0       1.0     0.0
+    ## 2         -0.122565   0.238905      0.481503  ...        0.0       0.0     1.0
+    ## 3          1.430603  -0.933900     -1.081219  ...        0.0       1.0     0.0
+    ## 4         -0.662798   0.238905      0.481503  ...        0.0       0.0     1.0
+    ## 
+    ## [5 rows x 9 columns]
 
 ### Documentation
 
