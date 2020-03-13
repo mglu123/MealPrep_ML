@@ -14,7 +14,6 @@ def test_find_missing_ingredients_inputs():
     Example
     --------
     >>> test_find_missing_ingredients_inputs()
-
     '''
     test = {'column1': []}
     df = pd.DataFrame(test)
