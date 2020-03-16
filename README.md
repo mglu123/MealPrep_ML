@@ -100,7 +100,7 @@ preprocess data in one line of code.
 
 ## Installation:
 
-    pip install -i https://test.pypi.org/simple/ mealprep
+    pip install mealprep
 
 ## Examples
 
