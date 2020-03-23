@@ -6,7 +6,7 @@ output:
 ---
 
 
-![](https://github.com/mglu123/mealprep/workflows/build/badge.svg) [![codecov](https://codecov.io/gh/mglu123/foocat/branch/master/graph/badge.svg)](https://codecov.io/gh/mglu123/mealprep) ![Release](https://github.com/mglu123/mealprep/workflows/Release/badge.svg)
+![](https://github.com/UBC-MDS/mealprep/workflows/build/badge.svg) [![codecov](https://codecov.io/gh/UBC-MDS/mealprep/branch/master/graph/badge.svg)](https://codecov.io/gh/UBC-MDS/mealprep) ![Release](https://github.com/UBC-MDS/mealprep/workflows/Release/badge.svg)
 
 [![Documentation Status](https://readthedocs.org/projects/mealprep/badge/?version=latest)](https://mealprep.readthedocs.io/en/latest/?badge=latest)
 
@@ -17,14 +17,13 @@ Mealprep offers a toolkit, made with care, to help users save time in the data p
 Recognizing that the preparation step of a data science project often requires the most time and effort, `mealprep` aims to help data science chefs of all specialties master their recipes of analysis. This package tackles pesky tasks such as classifying columns as categorical or numeric ingredients, straining NA values and outliers, and automating a preprocessing recipe pipeline.
 
 ## Functions
-`find_fruits_veg()`: This function will drop rows with NAs and find the indices of columns with all
-    numeric values or categorical values based on the specification.
+`find_fruits_veg()`: This function will drop rows with NAs and find the indices of columns with all numeric values or categorical values based on the specification.
     
 `find_missing_ingredients()`: For each column with missing values, this function will create a reference list of row indices, sum the number, and calculate the proportion of missing values.
     
 `find_bad_apples()`: This function uses a univariate approach to outlier detection. For each column with outliers (values that are 2 or more standard deviations from the mean), this function will create a reference list of row indices with outliers, and the total number of outliers in that column.
 
-`make_recipe()`: This function is used to quickly apply common data preprocessing techniques.
+`make_recipe()`: This function is used to quickly apply the following common data preprocessing techniques with one line of code: split the dataset into a training set and testing set, apply standard scaling to numeric features, apply one-hot-encoding to categorical features, fit and transform training data, and fit testing data.
 
 ## Mealprep and Python's Ecosystem
 
