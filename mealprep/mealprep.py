@@ -5,8 +5,8 @@ from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import OneHotEncoder, StandardScaler
 
 
-def find_fruits_veg(df, type_of_out='categ'):
-    '''
+def find_fruits_veg(df, type_of_out="categ", n_rows=100):
+    """
     This function will drop row with NAs and find the index of columns with all
     numeric value or categorical value based on the specification.
 
@@ -15,36 +15,52 @@ def find_fruits_veg(df, type_of_out='categ'):
     df: pandas.core.frame.DataFrame
         Data frame that need to be proceed
     type_of_out: string
-        Type of columns that we want to know index of
-    list_of_index: list
-        list of index value
+        Type of columns that we want to know index of, either 'categ' or 'num'
+    n_rows: int
+        The number of rows to check for each column. A higher value will ensure
+        more accurate results, but will take longer to compute. By default, 100
 
     Returns
     -------
-    list_of_categ: list
-        list of index of categorical value
-    list_of_num: list
-        list of index of numerical value
+    list
+        list of index of categorical or numerical values
 
     Example
     --------
     >>> df = pd.DataFrame({'col1': [1, 2], 'col2': ['a', 'b']})
     >>> find_fruits_veg(df, type_of_out = 'categ')
     [1]
-    '''
+    """
     list_of_categ = []
     list_of_num = []
     df_clean = df.dropna()
     if df_clean.shape[0] == 0:
         return "It is a empty data frame or too many missing data"
+    num_rows_to_check = min(100, df_clean.shape[0])
     for i in np.arange(df_clean.shape[1]):
-        if isinstance(df_clean.iloc[0, i], str):
-            list_of_categ += [i]
-        elif not isinstance(df_clean.iloc[0, i], str):
-            list_of_num += [i]
-    if type_of_out == 'categ':
+        is_str = []
+        is_num = []
+        for j in np.arange(num_rows_to_check):
+            ij = df_clean.iloc[j, i]
+            if isinstance(ij, str):
+                is_str.append(True)
+                is_num.append(False)
+            elif (
+                isinstance(ij, int)
+                or isinstance(ij, float)
+                or isinstance(ij, np.generic)
+            ):
+                is_str.append(False)
+                is_num.append(True)
+        # to be a numeric column, all values must be numeric
+        if sum(is_num) == num_rows_to_check:
+            list_of_num.append(i)
+        # to be a string column, only one value must be str
+        else:
+            list_of_categ.append(i)
+    if type_of_out == "categ":
         return list_of_categ
-    elif type_of_out == 'num':
+    elif type_of_out == "num":
         return list_of_num
 
 
@@ -73,8 +89,9 @@ def find_missing_ingredients(data):
     'There are no missing values'
 
     """
-    assert isinstance(data, pd.core.frame.DataFrame), \
-        "Input path should be a pandas data frame"
+    assert isinstance(
+        data, pd.core.frame.DataFrame
+    ), "Input path should be a pandas data frame"
     assert data.shape[0] >= 1, "The input data frame has no rows"
 
     if np.sum(np.sum(data.isna(), axis=0)) == 0:
@@ -89,19 +106,24 @@ def find_missing_ingredients(data):
             indices.append(data[column][data[column].isna()].index.values)
 
     else:
-        report = pd.DataFrame({'NaN count': counts,
-                               'NaN proportion': counts / data.shape[0],
-                               'NaN indices': indices}).reset_index()
+        report = pd.DataFrame(
+            {
+                "NaN count": counts,
+                "NaN proportion": counts / data.shape[0],
+                "NaN indices": indices,
+            }
+        ).reset_index()
 
-        report['NaN proportion'] = pd.Series(
-            ["{0:.1f}%".format(val * 100) for val in report['NaN proportion']])
-        report = report.rename(columns={"index": 'Column name'})
+        report["NaN proportion"] = pd.Series(
+            ["{0:.1f}%".format(val * 100) for val in report["NaN proportion"]]
+        )
+        report = report.rename(columns={"index": "Column name"})
 
         return report
 
 
 def find_bad_apples(df):
-    '''
+    """
     This function uses a univariate approach to outlier detection.
     For each column with outliers (values that are 2 or more
     standard deviations from the mean),
@@ -157,21 +179,23 @@ def find_bad_apples(df):
     >>> find_bad_apples(df))
     Variable                Indices     Total Outliers
     No outliers detected        []              0
-    '''
+    """
 
     # Checks that every column in the dataframe is numeric
-    assert df.select_dtypes(include=['float', 'int']).shape[1] == df.shape[1],\
-        'Every column in your dataframe must be numeric.'
+    assert (
+        df.select_dtypes(include=["float", "int"]).shape[1] == df.shape[1]
+    ), "Every column in your dataframe must be numeric."
 
     # Checks that there are at least 30 rows in the dataframe
-    assert df.shape[0] >= 30, \
-        'Sorry, you don\'t have enough data. \
-        The dataframe needs to have at least 30 rows.'
+    assert (
+        df.shape[0] >= 30
+    ), "Sorry, you don't have enough data. \
+        The dataframe needs to have at least 30 rows."
 
     columns = list(df)
 
     # Initializes empty dataframe
-    output = pd.DataFrame(columns=['Variable', 'Indices', 'Total Outliers'])
+    output = pd.DataFrame(columns=["Variable", "Indices", "Total Outliers"])
 
     c = 0
 
@@ -186,10 +210,9 @@ def find_bad_apples(df):
 
         values = df.values[:, c]
         for value in values:
-            if bool((mean - 2*sd) <= value & value <= (mean + 2*sd)) is True:
+            if bool((mean - 2 * sd) <= value & value <= (mean + 2 * sd)) is True:
                 r += 1
-            elif bool((mean - 2 * sd) <= value &
-                      value <= (mean + 2 * sd)) is False:
+            elif bool((mean - 2 * sd) <= value & value <= (mean + 2 * sd)) is False:
                 ind.append(r)
                 tot += 1
                 r += 1
@@ -198,28 +221,24 @@ def find_bad_apples(df):
         if tot == 0:
             continue
         else:
-            output = output.append({'Variable': col,
-                                    'Indices': ind,
-                                    'Total Outliers': tot},
-                                   ignore_index=True)
+            output = output.append(
+                {"Variable": col, "Indices": ind, "Total Outliers": tot},
+                ignore_index=True,
+            )
 
     if len(output) == 0:
-        output = output.append({'Variable': 'No outliers detected',
-                                'Indices': 'x',
-                                'Total Outliers': tot},
-                               ignore_index=True)
+        output = output.append(
+            {"Variable": "No outliers detected", "Indices": "x", "Total Outliers": tot},
+            ignore_index=True,
+        )
         return output
     else:
         return output
 
 
 def make_recipe(
-        X,
-        y,
-        recipe,
-        splits_to_return="train_test",
-        random_seed=None,
-        train_valid_prop=0.8):
+    X, y, recipe, splits_to_return="train_test", random_seed=None, train_valid_prop=0.8
+):
     """
     The `make_recipe()` function is used to quickly apply common data
     preprocessing techniques
@@ -300,9 +319,7 @@ def make_recipe(
     numerics = ["int16", "int32", "int64", "float16", "float32", "float64"]
     categorics = ["object"]
     numeric_features = list(X_train.select_dtypes(include=numerics).columns)
-    categorical_features = list(
-        X_train.select_dtypes(
-            include=categorics).columns)
+    categorical_features = list(X_train.select_dtypes(include=categorics).columns)
 
     # preprocess data
     if recipe == "ohe_and_standard_scaler":
