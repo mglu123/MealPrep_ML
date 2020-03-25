@@ -228,8 +228,8 @@ def find_bad_apples(df):
 
     if len(output) == 0:
         output = output.append(
-            {"Variable": "No outliers detected", 
-             "Indices": "x", 
+            {"Variable": "No outliers detected",
+             "Indices": "x",
              "Total Outliers": tot},
             ignore_index=True,
         )
@@ -275,8 +275,8 @@ def make_recipe(
     Returns
     -------
     Tuple
-        A tuple of pandas dataframes and numpy arrays. The X_ objects are 
-        pandas dataframes, while the y_ objects are numpy arrays. 
+        A tuple of pandas dataframes and numpy arrays. The X_ objects are
+        pandas dataframes, while the y_ objects are numpy arrays.
         (X_train, X_valid, X_test, y_train, y_valid, y_test)
 
     Example

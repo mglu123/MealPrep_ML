@@ -79,9 +79,9 @@ def test_make_recipe_splits_train():
     )
 
     assert type(X_train) == pd.DataFrame
-    assert X_test == None
+    assert X_test is None
     assert type(y_train) == np.ndarray
-    assert y_test == None
+    assert y_test is None
     assert X_valid is None
     assert y_valid is None
 
