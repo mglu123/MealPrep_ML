@@ -91,7 +91,7 @@ def find_missing_ingredients(data):
     """
     assert isinstance(
         data, pd.core.frame.DataFrame
-    ), "Input path should be a pandas data frame"
+    ), "`data` should be a pandas data frame"
     assert data.shape[0] >= 1, "The input data frame has no rows"
 
     if np.sum(np.sum(data.isna(), axis=0)) == 0:
@@ -210,9 +210,9 @@ def find_bad_apples(df):
 
         values = df.values[:, c]
         for value in values:
-            if bool((mean - 2 * sd) <= value & value <= (mean + 2 * sd)) is True:
+            if (mean - 2 * sd) <= value and value <= (mean + 2 * sd):
                 r += 1
-            elif bool((mean - 2 * sd) <= value & value <= (mean + 2 * sd)) is False:
+            else:
                 ind.append(r)
                 tot += 1
                 r += 1
@@ -228,7 +228,9 @@ def find_bad_apples(df):
 
     if len(output) == 0:
         output = output.append(
-            {"Variable": "No outliers detected", "Indices": "x", "Total Outliers": tot},
+            {"Variable": "No outliers detected", 
+             "Indices": "x", 
+             "Total Outliers": tot},
             ignore_index=True,
         )
         return output
@@ -237,7 +239,12 @@ def find_bad_apples(df):
 
 
 def make_recipe(
-    X, y, recipe, splits_to_return="train_test", random_seed=None, train_valid_prop=0.8
+    X,
+    y,
+    recipe="ohe_and_standard_scaler",
+    splits_to_return="train_test",
+    random_seed=None,
+    train_valid_prop=0.8,
 ):
     """
     The `make_recipe()` function is used to quickly apply common data
@@ -252,7 +259,7 @@ def make_recipe(
     recipe : str
         A string specifying which recipe to apply to the data. The only recipe
         currently available is "ohe_and_standard_scaler". More recipes are
-        under development.
+        under development. By default "ohe_and_standard_scaler"
     splits_to_return : str, optional
         "train_test" to return train and test splits, "train_test_valid" to
         return train, test, and validation data, "train" to return all data
@@ -261,14 +268,16 @@ def make_recipe(
         The random seed to set for splitting data to create reproducible
         results. By default None.
     train_valid_prop : float, optional
-        The proportion to split the data by. Should range between 0 to 1. By
-        default = 0.8
+        The proportion to split the data by. Should range between 0 to 1. For
+        example, if 0.8, than the trainin data would make up 0.8, while the
+        test data would make up 0.2. By default = 0.8.
 
     Returns
     -------
-    Tuple of pandas.DataFrame
-        A tuple of dataframes: (X_train, X_valid, X_test, y_train, y_valid,
-        y_test)
+    Tuple
+        A tuple of pandas dataframes and numpy arrays. The X_ objects are 
+        pandas dataframes, while the y_ objects are numpy arrays. 
+        (X_train, X_valid, X_test, y_train, y_valid, y_test)
 
     Example
     --------
@@ -292,6 +301,7 @@ def make_recipe(
     assert splits_to_return in [
         "train_test",
         "train_test_valid",
+        "train"
     ], "Please enter a valid string for splits_to_return."
 
     # clean input data
@@ -300,26 +310,35 @@ def make_recipe(
     # split data
     if splits_to_return == "train_test":
         X_train, X_test, y_train, y_test = train_test_split(
-            X, y, test_size=train_valid_prop, random_state=random_seed
+            X, y, test_size=1 - train_valid_prop, random_state=random_seed
         )
         X_valid = None
         y_valid = None
     elif splits_to_return == "train_test_valid":
         X_train_valid, X_test, y_train_valid, y_test = train_test_split(
-            X, y, test_size=train_valid_prop, random_state=random_seed
+            X, y, test_size=1 - train_valid_prop, random_state=random_seed
         )
         X_train, X_valid, y_train, y_valid = train_test_split(
             X_train_valid,
             y_train_valid,
-            test_size=train_valid_prop,
+            test_size=1 - train_valid_prop,
             random_state=random_seed,
         )
+    elif splits_to_return == "train":
+        X_train = X
+        y_train = y
+        X_test = None
+        y_test = None
+        X_valid = None
+        y_valid = None
 
     # determine column type
     numerics = ["int16", "int32", "int64", "float16", "float32", "float64"]
     categorics = ["object"]
     numeric_features = list(X_train.select_dtypes(include=numerics).columns)
-    categorical_features = list(X_train.select_dtypes(include=categorics).columns)
+    categorical_features = list(
+        X_train.select_dtypes(include=categorics).columns
+    )
 
     # preprocess data
     if recipe == "ohe_and_standard_scaler":
@@ -334,7 +353,8 @@ def make_recipe(
     )
 
     X_train = preprocessor.fit_transform(X_train)
-    X_test = preprocessor.transform(X_test)
+    if splits_to_return == "train_test":
+        X_test = preprocessor.transform(X_test)
     if splits_to_return == "train_test_valid":
         X_valid = preprocessor.transform(X_valid)
 
@@ -346,7 +366,8 @@ def make_recipe(
         categorical_features_transformed
     )
     X_train = pd.DataFrame(data=X_train, columns=features_transformed)
-    X_test = pd.DataFrame(data=X_test, columns=features_transformed)
+    if splits_to_return == "train_test":
+        X_test = pd.DataFrame(data=X_test, columns=features_transformed)
     if splits_to_return == "train_test_valid":
         X_valid = pd.DataFrame(data=X_valid, columns=features_transformed)
 
