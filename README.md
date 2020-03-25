@@ -1,9 +1,9 @@
 mealprep
 ================
 
-![](https://github.com/mglu123/mealprep/workflows/build/badge.svg)
-[![codecov](https://codecov.io/gh/mglu123/foocat/branch/master/graph/badge.svg)](https://codecov.io/gh/mglu123/mealprep)
-![Release](https://github.com/mglu123/mealprep/workflows/Release/badge.svg)
+![](https://github.com/UBC-MDS/mealprep/workflows/build/badge.svg)
+[![codecov](https://codecov.io/gh/UBC-MDS/mealprep/branch/master/graph/badge.svg)](https://codecov.io/gh/UBC-MDS/mealprep)
+![Release](https://github.com/UBC-MDS/mealprep/workflows/Release/badge.svg)
 
 [![Documentation
 Status](https://readthedocs.org/projects/mealprep/badge/?version=latest)](https://mealprep.readthedocs.io/en/latest/?badge=latest)
@@ -36,8 +36,11 @@ standard deviations from the mean), this function will create a
 reference list of row indices with outliers, and the total number of
 outliers in that column.
 
-`make_recipe()`: This function is used to quickly apply common data
-preprocessing techniques.
+`make_recipe()`: This function is used to quickly apply the following
+common data preprocessing techniques with one line of code: split the
+dataset into a training set and testing set, apply standard scaling to
+numeric features, apply one-hot-encoding to categorical features, fit
+and transform training data, and fit testing data.
 
 ## Mealprep and Python’s Ecosystem
 
@@ -100,7 +103,7 @@ preprocess data in one line of code.
 
 ## Installation:
 
-    pip install mealprep
+    pip install -i https://test.pypi.org/simple/ mealprep
 
 ## Examples
 
@@ -313,11 +316,11 @@ X_train.head()
 ```
 
     ##    Miles_per_Gallon  Cylinders  Displacement  ...  x0_Europe  x0_Japan  x0_USA
-    ## 0          1.136396  -0.825761     -0.900964  ...        0.0       0.0     1.0
-    ## 1         -1.084286   1.441582      1.652002  ...        0.0       0.0     1.0
-    ## 2         -0.305099  -0.825761     -0.691131  ...        0.0       0.0     1.0
-    ## 3         -1.344015   1.441582      1.311023  ...        0.0       0.0     1.0
-    ## 4         -0.564828  -0.825761     -0.691131  ...        0.0       0.0     1.0
+    ## 0         -1.096898   1.631787      1.110608  ...        0.0       0.0     1.0
+    ## 1         -0.888627   0.402255      0.599699  ...        0.0       0.0     1.0
+    ## 2         -0.263811  -0.827278     -0.481069  ...        0.0       0.0     1.0
+    ## 3         -0.430428   0.402255      0.108441  ...        0.0       0.0     1.0
+    ## 4         -0.472083   0.402255      0.108441  ...        0.0       0.0     1.0
     ## 
     ## [5 rows x 9 columns]
 
