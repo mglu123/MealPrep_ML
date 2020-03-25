@@ -1,6 +1,6 @@
 # This workflow will install Python dependencies, run tests and check PEP-8 style with a single version of Python
 
-name: build mealprep package
+name: build mealprep package (ubuntu and mac OS)
 
 on: [push, pull_request]
 
