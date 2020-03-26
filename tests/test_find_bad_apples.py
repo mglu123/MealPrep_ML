@@ -28,7 +28,7 @@ def test_except_nonnumeric():
                             1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
                             1, 1, 1, 1, 1, 1, 1, 1, 1, "test"]})
 
-    with pytest.raises(AssertionError):
+    with pytest.raises(ValueError):
         find_bad_apples(df_test1)
 
 
@@ -57,7 +57,7 @@ def test_except_min():
                             1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
                             1, 1, 1, 1, 1, 1, 1, 1, 1]})
 
-    with pytest.raises(AssertionError):
+    with pytest.raises(ValueError):
         find_bad_apples(df_test2)
 
 

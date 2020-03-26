@@ -15,12 +15,12 @@ def test_find_missing_ingredients_inputs():
     --------
     >>> test_find_missing_ingredients_inputs()
     '''
-    test = {'column1': []}
+    test = {'column1': [], 'column2': []}
     df = pd.DataFrame(test)
-    with pytest.raises(AssertionError):
+    with pytest.raises(ValueError):
         find_missing_ingredients(df)
 
-    with pytest.raises(AssertionError):
+    with pytest.raises(ValueError):
         find_missing_ingredients("test")
 
 
