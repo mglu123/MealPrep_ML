@@ -1,13 +1,13 @@
 ---
 title: "mealprep"
 output:
-    github_document:
-    pandoc_args: --webtex
+    github_document
 ---
 
 
-![](https://github.com/UBC-MDS/mealprep/workflows/build/badge.svg) [![codecov](https://codecov.io/gh/UBC-MDS/mealprep/branch/master/graph/badge.svg)](https://codecov.io/gh/UBC-MDS/mealprep) ![Release](https://github.com/UBC-MDS/mealprep/workflows/Release/badge.svg)
-
+![build mealprep package](https://github.com/UBC-MDS/mealprep/workflows/build%20mealprep%20package/badge.svg)
+![Release](https://github.com/UBC-MDS/mealprep/workflows/Release/badge.svg)
+[![codecov](https://codecov.io/gh/UBC-MDS/mealprep/branch/master/graph/badge.svg)](https://codecov.io/gh/UBC-MDS/mealprep)
 [![Documentation Status](https://readthedocs.org/projects/mealprep/badge/?version=latest)](https://mealprep.readthedocs.io/en/latest/?badge=latest)
 
 Mealprep offers a toolkit, made with care, to help users save time in the data preprocessing kitchen. 

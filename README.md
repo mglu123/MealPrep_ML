@@ -1,10 +1,10 @@
 mealprep
 ================
 
-![](https://github.com/UBC-MDS/mealprep/workflows/build/badge.svg)
-[![codecov](https://codecov.io/gh/UBC-MDS/mealprep/branch/master/graph/badge.svg)](https://codecov.io/gh/UBC-MDS/mealprep)
+![build mealprep
+package](https://github.com/UBC-MDS/mealprep/workflows/build%20mealprep%20package/badge.svg)
 ![Release](https://github.com/UBC-MDS/mealprep/workflows/Release/badge.svg)
-
+[![codecov](https://codecov.io/gh/UBC-MDS/mealprep/branch/master/graph/badge.svg)](https://codecov.io/gh/UBC-MDS/mealprep)
 [![Documentation
 Status](https://readthedocs.org/projects/mealprep/badge/?version=latest)](https://mealprep.readthedocs.io/en/latest/?badge=latest)
 
@@ -316,11 +316,11 @@ X_train.head()
 ```
 
     ##    Miles_per_Gallon  Cylinders  Displacement  ...  x0_Europe  x0_Japan  x0_USA
-    ## 0         -1.096898   1.631787      1.110608  ...        0.0       0.0     1.0
-    ## 1         -0.888627   0.402255      0.599699  ...        0.0       0.0     1.0
-    ## 2         -0.263811  -0.827278     -0.481069  ...        0.0       0.0     1.0
-    ## 3         -0.430428   0.402255      0.108441  ...        0.0       0.0     1.0
-    ## 4         -0.472083   0.402255      0.108441  ...        0.0       0.0     1.0
+    ## 0          0.564509  -0.846151     -0.910090  ...        0.0       0.0     1.0
+    ## 1          0.883582  -0.846151     -0.910090  ...        0.0       0.0     1.0
+    ## 2          1.126078  -0.846151     -0.815709  ...        0.0       1.0     0.0
+    ## 3         -1.094674   0.308177      0.524498  ...        0.0       0.0     1.0
+    ## 4          0.794242  -0.846151     -0.995032  ...        1.0       0.0     0.0
     ## 
     ## [5 rows x 9 columns]
 

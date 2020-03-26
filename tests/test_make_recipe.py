@@ -69,6 +69,27 @@ def test_make_recipe_splits_traintestvalid():
     return None
 
 
+def test_make_recipe_splits_train():
+    X, y = cars_data()
+
+    # Test on splits_to_return="train_test"
+    X_train, X_valid, X_test, y_train, y_valid, y_test = mealprep.make_recipe(
+        X=X, y=y, recipe="ohe_and_standard_scaler",
+        splits_to_return="train"
+    )
+
+    assert type(X_train) == pd.DataFrame
+    assert X_test is None
+    assert type(y_train) == np.ndarray
+    assert y_test is None
+    assert X_valid is None
+    assert y_valid is None
+
+    assert X.shape[0] == X_train.shape[0]
+
+    return None
+
+
 def test_make_recipe_ohe():
     X, y = cars_data()
 

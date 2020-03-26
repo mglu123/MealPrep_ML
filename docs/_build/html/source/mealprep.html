@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta charset="utf-8" />
-    <title>mealprep package &#8212; mealprep 0.1.0 documentation</title>
+    <title>mealprep package &#8212; mealprep 1.0.11 documentation</title>
     <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
@@ -100,23 +100,23 @@ Total Outliers (number of outliers in the column)</p>
 
 <dl class="function">
 <dt id="mealprep.mealprep.find_fruits_veg">
-<code class="sig-prename descclassname">mealprep.mealprep.</code><code class="sig-name descname">find_fruits_veg</code><span class="sig-paren">(</span><em class="sig-param">df</em>, <em class="sig-param">type_of_out='categ'</em><span class="sig-paren">)</span><a class="headerlink" href="#mealprep.mealprep.find_fruits_veg" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">mealprep.mealprep.</code><code class="sig-name descname">find_fruits_veg</code><span class="sig-paren">(</span><em class="sig-param">df</em>, <em class="sig-param">type_of_out='categ'</em>, <em class="sig-param">n_rows=100</em><span class="sig-paren">)</span><a class="headerlink" href="#mealprep.mealprep.find_fruits_veg" title="Permalink to this definition">¶</a></dt>
 <dd><p>This function will drop row with NAs and find the index of columns with all
 numeric value or categorical value based on the specification.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>df</strong> (<em>pandas.core.frame.DataFrame</em>) – Data frame that need to be proceed</p></li>
-<li><p><strong>type_of_out</strong> (<em>string</em>) – Type of columns that we want to know index of</p></li>
-<li><p><strong>list_of_index</strong> (<em>list</em>) – list of index value</p></li>
+<li><p><strong>type_of_out</strong> (<em>string</em>) – Type of columns that we want to know index of, either ‘categ’ or ‘num’</p></li>
+<li><p><strong>n_rows</strong> (<em>int</em>) – The number of rows to check for each column. A higher value will ensure
+more accurate results, but will take longer to compute. By default, 100</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p><ul class="simple">
-<li><p><strong>list_of_categ</strong> (<em>list</em>) – list of index of categorical value</p></li>
-<li><p><strong>list_of_num</strong> (<em>list</em>) – list of index of numerical value</p></li>
-</ul>
-</p>
+<dd class="field-even"><p>list of index of categorical or numerical values</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>list</p>
 </dd>
 </dl>
 <p class="rubric">Example</p>
@@ -156,7 +156,7 @@ count and proportion of missing values in each column</p>
 
 <dl class="function">
 <dt id="mealprep.mealprep.make_recipe">
-<code class="sig-prename descclassname">mealprep.mealprep.</code><code class="sig-name descname">make_recipe</code><span class="sig-paren">(</span><em class="sig-param">X</em>, <em class="sig-param">y</em>, <em class="sig-param">recipe</em>, <em class="sig-param">splits_to_return='train_test'</em>, <em class="sig-param">random_seed=None</em>, <em class="sig-param">train_valid_prop=0.8</em><span class="sig-paren">)</span><a class="headerlink" href="#mealprep.mealprep.make_recipe" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">mealprep.mealprep.</code><code class="sig-name descname">make_recipe</code><span class="sig-paren">(</span><em class="sig-param">X</em>, <em class="sig-param">y</em>, <em class="sig-param">recipe='ohe_and_standard_scaler'</em>, <em class="sig-param">splits_to_return='train_test'</em>, <em class="sig-param">random_seed=None</em>, <em class="sig-param">train_valid_prop=0.8</em><span class="sig-paren">)</span><a class="headerlink" href="#mealprep.mealprep.make_recipe" title="Permalink to this definition">¶</a></dt>
 <dd><p>The <cite>make_recipe()</cite> function is used to quickly apply common data
 preprocessing techniques</p>
 <dl class="field-list simple">
@@ -166,22 +166,24 @@ preprocessing techniques</p>
 <li><p><strong>y</strong> (<em>pandas.DataFrame</em>) – A dataframe containing training, validation, and testing response.</p></li>
 <li><p><strong>recipe</strong> (<em>str</em>) – A string specifying which recipe to apply to the data. The only recipe
 currently available is “ohe_and_standard_scaler”. More recipes are
-under development.</p></li>
+under development. By default “ohe_and_standard_scaler”</p></li>
 <li><p><strong>splits_to_return</strong> (<em>str</em><em>, </em><em>optional</em>) – “train_test” to return train and test splits, “train_test_valid” to
 return train, test, and validation data, “train” to return all data
 without splits. By default “train_test”.</p></li>
 <li><p><strong>random_seed</strong> (<em>int</em><em>, </em><em>optional</em>) – The random seed to set for splitting data to create reproducible
 results. By default None.</p></li>
-<li><p><strong>train_valid_prop</strong> (<em>float</em><em>, </em><em>optional</em>) – The proportion to split the data by. Should range between 0 to 1. By
-default = 0.8</p></li>
+<li><p><strong>train_valid_prop</strong> (<em>float</em><em>, </em><em>optional</em>) – The proportion to split the data by. Should range between 0 to 1. For
+example, if 0.8, than the trainin data would make up 0.8, while the
+test data would make up 0.2. By default = 0.8.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p>A tuple of dataframes: (X_train, X_valid, X_test, y_train, y_valid,
-y_test)</p>
+<dd class="field-even"><p>A tuple of pandas dataframes and numpy arrays. The <a href="#id1"><span class="problematic" id="id2">X_</span></a> objects are
+pandas dataframes, while the <a href="#id3"><span class="problematic" id="id4">y_</span></a> objects are numpy arrays.
+(X_train, X_valid, X_test, y_train, y_valid, y_test)</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>Tuple of pandas.DataFrame</p>
+<dd class="field-odd"><p>Tuple</p>
 </dd>
 </dl>
 <p class="rubric">Example</p>
