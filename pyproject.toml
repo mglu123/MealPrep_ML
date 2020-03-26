@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "mealprep"
-version = "1.0.14"
+version = "1.0.15"
 description = "Python package that ease the pain in pre-processing like outlier finding, numerical/categorical data and etc."
 authors = ["luhuayue <luhuayueapp@163.com>"]
 license = "MIT"
