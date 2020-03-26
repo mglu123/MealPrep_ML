@@ -140,7 +140,7 @@ def test_make_recipe_ohe():
     ]
 
     # check that error is thrown if bad recipe select
-    with pytest.raises(AssertionError) as e_info:
+    with pytest.raises(ValueError):
         (X_train, X_valid, X_test,
          y_train, y_valid, y_test) = mealprep.make_recipe(
             X=X,
@@ -149,8 +149,6 @@ def test_make_recipe_ohe():
             splits_to_return="train_test",
             random_seed=1993,
         )
-    error_message = "Please select a valid string option for recipe."
-    assert error_message in str(e_info.value)
 
     return None
 
@@ -176,7 +174,7 @@ def test_make_recipe_split_prop():
 def test_make_recipe_defence():
     X, y = cars_data()
 
-    with pytest.raises(AssertionError):
+    with pytest.raises(ValueError):
         (X_train, X_valid, X_test,
          y_train, y_valid, y_test) = mealprep.make_recipe(
             X=X,

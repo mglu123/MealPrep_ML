@@ -89,10 +89,10 @@ def find_missing_ingredients(data):
     'There are no missing values'
 
     """
-    assert isinstance(
-        data, pd.core.frame.DataFrame
-    ), "`data` should be a pandas data frame"
-    assert data.shape[0] >= 1, "The input data frame has no rows"
+    if not isinstance(data, pd.core.frame.DataFrame):
+        raise ValueError("`data` should be a pandas data frame")
+    if data.shape[0] == 0:
+        raise ValueError("The input data frame has no rows")
 
     if np.sum(np.sum(data.isna(), axis=0)) == 0:
         return "There are no missing values"
@@ -153,11 +153,11 @@ def find_bad_apples(df):
     --------
     >>> df = pd.DataFrame({'A' : ['test', 1, 1, 1, 1])
     >>> find_bad_apples(df)
-    AssertionError: Every column in your dataframe must be numeric.
+    ValueError: Every column in your dataframe must be numeric.
     >>> df = pd.DataFrame({'A' : [1, 1, 1, 1, 1],
     ...                    'B' : [10000, 1, 1, 1, 1]})
     >>> find_bad_apples(df)
-    AssertionError: Sorry, you don't have enough data.
+    ValueError: Sorry, you don't have enough data.
     The dataframe needs to have at least 30 rows.
     >>> df = pd.DataFrame({'A' : [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
     ...                             1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
@@ -182,15 +182,13 @@ def find_bad_apples(df):
     """
 
     # Checks that every column in the dataframe is numeric
-    assert (
-        df.select_dtypes(include=["float", "int"]).shape[1] == df.shape[1]
-    ), "Every column in your dataframe must be numeric."
+    if df.select_dtypes(include=["float", "int"]).shape[1] != df.shape[1]:
+        raise ValueError("Every column in your dataframe must be numeric.")
 
     # Checks that there are at least 30 rows in the dataframe
-    assert (
-        df.shape[0] >= 30
-    ), "Sorry, you don't have enough data. \
-        The dataframe needs to have at least 30 rows."
+    if df.shape[0] < 30:
+        raise ValueError("Sorry, you don't have enough data. \
+        The dataframe needs to have at least 30 rows.")
 
     columns = list(df)
 
@@ -292,17 +290,12 @@ def make_recipe(
     """
 
     # validate inputs
-    assert (
-        X.shape[0] == y.shape[0]
-    ), "X and y should have the same number of observations."
-    assert recipe in [
-        "ohe_and_standard_scaler"
-    ], "Please select a valid string option for recipe."
-    assert splits_to_return in [
-        "train_test",
-        "train_test_valid",
-        "train"
-    ], "Please enter a valid string for splits_to_return."
+    if X.shape[0] != y.shape[0]:
+        raise ValueError("X and y should have the same number of rows.")
+    if recipe not in ["ohe_and_standard_scaler"]:
+        raise ValueError("Please select a valid string option for recipe.")
+    if splits_to_return not in ["train_test", "train_test_valid", "train"]:
+        raise ValueError("Please enter a valid string for splits_to_return.")
 
     # clean input data
     y = y.to_numpy().ravel()
